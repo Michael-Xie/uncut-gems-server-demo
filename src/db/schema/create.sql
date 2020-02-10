@@ -1,35 +1,90 @@
-DROP TABLE IF EXISTS available_interviewers CASCADE;
-DROP TABLE IF EXISTS interviews CASCADE;
-DROP TABLE IF EXISTS interviewers CASCADE;
-DROP TABLE IF EXISTS appointments CASCADE;
-DROP TABLE IF EXISTS days CASCADE;
+DROP TABLE IF EXISTS teams CASCADE;
+DROP TABLE IF EXISTS games CASCADE;
+DROP TABLE IF EXISTS winnings CASCADE;
+DROP TABLE IF EXISTS parlays CASCADE;
+DROP TABLE IF EXISTS bets CASCADE;
+DROP TABLE IF EXISTS bet_types CASCADE;
+DROP TABLE IF EXISTS user_bets CASCADE;
+DROP TABLE IF EXISTS groups CASCADE;
+DROP TABLE IF EXISTS user_groups CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
-CREATE TABLE days (
+CREATE TABLE users
+(
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(255) NOT NULL
+  user_name VARCHAR(255) NOT NULL,
+  wallet_amount MONEY,
+  password VARCHAR(255) NOT NULL,
+  stripe_charge_id TEXT
 );
-
-CREATE TABLE appointments (
+CREATE TABLE user_groups
+(
   id SERIAL PRIMARY KEY NOT NULL,
-  time VARCHAR(255) NOT NULL,
-  day_id INTEGER REFERENCES days(id) ON DELETE CASCADE
+  admin_status BOOLEAN DEFAULT FALSE,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
-
-CREATE TABLE interviewers (
+CREATE TABLE groups
+(
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
-  avatar VARCHAR(255) NOT NULL
+  identifier VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE interviews (
+CREATE TYPE status AS ENUM
+('open', 'in-progress', 'close');
+
+CREATE TABLE parlays
+(
   id SERIAL PRIMARY KEY NOT NULL,
-  student VARCHAR(255) NOT NULL,
-  interviewer_id INTEGER REFERENCES interviewers(id) ON DELETE CASCADE,
-  appointment_id INTEGER UNIQUE REFERENCES appointments(id) ON DELETE CASCADE
+  fee MONEY NOT NULL,
+  current_status status NOT NULL,
+  group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE
 );
 
-CREATE TABLE available_interviewers (
+CREATE TABLE winnings
+(
   id SERIAL PRIMARY KEY NOT NULL,
-  day_id INTEGER REFERENCES days(id) ON DELETE CASCADE,
-  interviewer_id INTEGER REFERENCES interviewers(id) ON DELETE CASCADE
+  payout MONEY NOT NULL,
+  parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE user_bets
+(
+  id SERIAL PRIMARY KEY NOT NULL,
+  value VARCHAR(255) NOT NULL,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE teams
+(
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  logo_url TEXT NOT NULL
+);
+
+CREATE TABLE games (
+  id SERIAL PRIMARY KEY NOT NULL,
+  game_id INTEGER NOT NULL,
+  date TEXT NOT NULL,
+  timestamp BIGINT NOT NULL,
+  status TEXT NOT NULL,
+  home_team TEXT NOT NULL,
+  away_team TEXT NOT NULL,
+  home_score SMALLINT NOT NULL,
+  away_score SMALLINT NOT NULL
+);
+
+CREATE table bet_types
+(
+  id serial primary key not null,
+  name varchar(255) not null
+);
+
+CREATE TABLE bets
+(
+  id SERIAL PRIMARY KEY NOT NULL,
+  type_id INTEGER REFERENCES bet_types(id) ON DELETE CASCADE,
+  parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
+  game_id INTEGER REFERENCES games(id) ON DELETE CASCADE
 );

@@ -48,7 +48,7 @@ function getGames(date) {
   })
   .catch(err => console.log)
 }
-const dates = ['2020-02-08', '2020-02-09', '2020-02-10']
+const dates = ['2020-02-10', '2020-02-11', '2020-02-12']
 dates.forEach(date => {
   getGames(date)
 })

@@ -30,7 +30,7 @@ function read(file) {
 }
 
 const games = []
-function getGames(date) {
+const getGames = date => {
   axios(`https://api-basketball.p.rapidapi.com/games?date=${date}`, {
     "method": "GET",
     "headers": {
@@ -49,6 +49,7 @@ function getGames(date) {
   .catch(err => console.log)
 }
 const dates = ['2020-02-10', '2020-02-11', '2020-02-12']
+
 dates.forEach(date => {
   getGames(date)
 })

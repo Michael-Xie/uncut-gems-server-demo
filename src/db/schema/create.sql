@@ -72,8 +72,16 @@ CREATE TABLE games (
   status TEXT NOT NULL,
   home_team TEXT NOT NULL,
   away_team TEXT NOT NULL,
-  home_score SMALLINT NOT NULL,
-  away_score SMALLINT NOT NULL
+  home_first  SMALLINT NOT NULL,
+  home_second SMALLINT NOT NULL,
+  home_third  SMALLINT NOT NULL,
+  home_fourth SMALLINT NOT NULL,
+  away_first  SMALLINT NOT NULL,
+  away_second SMALLINT NOT NULL,
+  away_third  SMALLINT NOT NULL,
+  away_fourth SMALLINT NOT NULL,
+  home_total  SMALLINT NOT NULL,
+  away_total  SMALLINT NOT NULL
 );
 
 CREATE table bet_types

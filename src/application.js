@@ -37,11 +37,27 @@ module.exports = function application(ENV) {
   app.use("/api", gameRoute(db))
 
   if (ENV === "development" || ENV === "test") {
-    read(path.resolve(__dirname, `db/schema/create.sql`))
+    Promise.all([
+      read(path.resolve(__dirname, `db/schema/create.sql`))
+    ])
+      .then(([create]) => {
+        app.get("/api/debug/reset", (request, response) => {
+          db.query(create)
+            .then(() => {
+              console.log("Database Reset");
+              response.status(200).send("Database Reset");
+            });
+        });
+      })
+      .catch(error => {
+        console.log(`Error setting up the reset route: ${error}`);
+      });
   }
 
   const dates = ['2020-02-11', '2020-02-12', '2020-02-14']
+  
   getGames(dates, db)
+
   setInterval(() => {
     getGames(['2020-02-11'], db)
     console.log('updated')

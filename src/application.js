@@ -61,7 +61,7 @@ module.exports = function application(ENV) {
   setInterval(() => {
     getGames(['2020-02-11'], db)
     console.log('updated')
-  }, 10000)
+  }, 60000)
 
   app.close = function() {
     return db.end();

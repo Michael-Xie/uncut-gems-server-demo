@@ -69,7 +69,7 @@ CREATE TABLE games (
   game_id INTEGER NOT NULL,
   date TEXT NOT NULL,
   timestamp BIGINT NOT NULL,
-  status TEXT NOT NULL,
+  status TEXT,
   home_team TEXT NOT NULL,
   away_team TEXT NOT NULL,
   home_first  SMALLINT NOT NULL,

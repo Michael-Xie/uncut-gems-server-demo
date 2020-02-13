@@ -53,15 +53,13 @@ module.exports = function application(ENV) {
         console.log(`Error setting up the reset route: ${error}`);
       });
   }
-
-  const dates = ['2020-02-11', '2020-02-12', '2020-02-14']
-  
+  const dates = ['2020-02-12', '2020-02-13', '2020-02-14']
   getGames(dates, db)
 
   setInterval(() => {
-    getGames(['2020-02-11'], db)
+    getGames(dates, db)
     console.log('updated')
-  }, 10000)
+  }, 30000)
 
   app.close = function() {
     return db.end();

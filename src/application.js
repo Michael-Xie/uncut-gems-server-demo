@@ -9,6 +9,7 @@ const cors = require("cors");
 const app = express();
 
 const gameRoute = require("./routes/games")
+const userRoute = require("./routes/users")
 const getGames = require("./models/getGames")
 
 const db = require("./db");
@@ -35,6 +36,8 @@ module.exports = function application(ENV) {
   app.use(bodyparser.json());
   
   app.use("/api", gameRoute(db))
+  app.use("/api", userRoute(db))
+  
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([

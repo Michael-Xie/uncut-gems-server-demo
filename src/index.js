@@ -5,9 +5,9 @@ const app = require("./application")(ENV, { getGames });
 const server = require("http").Server(app);
 
 const WebSocket = require("ws");
-const wss = new WebSocket.Server({ server });
+const ws = new WebSocket.Server({ server });
 
-wss.on("connection", socket => {
+ws.on("connection", socket => {
   socket.onmessage = event => {
     console.log(`Message Received: ${event.data}`);
 
@@ -22,7 +22,7 @@ wss.on("connection", socket => {
  */
 
 function getGames() {
-  wss.clients.forEach(function eachClient(client) {
+  ws.clients.forEach(function eachClient(client) {
     if (client.readyState === WebSocket.OPEN) {
       client.send(
         JSON.stringify({

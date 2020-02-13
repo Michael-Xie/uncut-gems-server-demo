@@ -53,7 +53,9 @@ module.exports = function application(ENV) {
         console.log(`Error setting up the reset route: ${error}`);
       });
   }
-  const dates = ['2020-02-13']
+
+  // format dates
+  const dates = ['2020-02-12', '2020-02-13']
   getGames(dates, db)
 
   let i = 0

@@ -61,7 +61,6 @@ module.exports = (dates, db, update) => {
                   away_fourth, home_total, away_total ]
             )
             .catch(err => console.log(err))
-          }
           } else {
             db.query(
               `
@@ -81,8 +80,7 @@ module.exports = (dates, db, update) => {
             )
             .catch(err => console.log(err))
           }
-          */
-          }
+        }
       })
     })
     // upon the completion of the update, call the games route to trigger the

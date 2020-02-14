@@ -35,10 +35,10 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
    * [TODO] set the games date. 
    */
 
-  const games = getGames(["2020-02-10"], db)
+  const games = getGames(["2020-02-10"], db, false)
   games
   setInterval(() => {
-    getGames(["2020-02-11"], db)
+    getGames(["2020-02-11"], db, true)
   }, 30000)
 
   app.use(cors())

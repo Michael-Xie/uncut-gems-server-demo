@@ -17,9 +17,6 @@ ws.on("connection", socket => {
   };
 });
 
-/* [TODO] instead of updateAppointment, update the scores on a
- * set interval of 30 seconds.
- */
 function updateGames(games) {
   ws.clients.forEach(function eachClient(client) {
     if (client.readyState === WebSocket.OPEN) {

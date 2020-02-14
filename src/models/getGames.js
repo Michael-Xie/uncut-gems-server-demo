@@ -1,6 +1,6 @@
 const axios = require("axios")
 
-module.exports = (dates, db) => {
+module.exports = (dates, db, callAPI) => {
   // delete all data currently in the games table.
   db.query(`DELETE FROM games WHERE games.id > 0`)
   // ---------------------------------------------
@@ -59,7 +59,8 @@ module.exports = (dates, db) => {
     // upon the completion of the update, call the games route to trigger the
     // a websocket call.
     .then(res => {
-      axios.get("http://localhost:8001/api/games")
+      if (callAPI)
+        axios.get("http://localhost:8001/api/games/1")
     })
   })
 }

@@ -1,5 +1,15 @@
 const router = require("express").Router();
 
+const getUserWithUsername = function (db, userName) {
+  const queryString =
+    `
+    SELECT * FROM users
+    WHERE user_name = $1;
+    `;
+  const value = [userName];
+  return db.query(queryString, value);
+}
+
 module.exports = db => {
   router.get("/users", (request, response) => {
     const { user_name, password, wallet_amount, stripe_charge_id } = request.body
@@ -14,15 +24,7 @@ module.exports = db => {
   })
 
 
-  const getUserWithUsername = function (db, userName) {
-    const queryString =
-      `
-      SELECT * FROM users
-      WHERE user_name = $1;
-      `;
-    const value = [userName];
-    return db.query(queryString, value);
-  }
+
   const login = function (userName, password) {
     console.log("in login function")
     return getUserWithUsername(db, userName)

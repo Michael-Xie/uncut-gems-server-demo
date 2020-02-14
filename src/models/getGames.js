@@ -1,6 +1,6 @@
 const axios = require("axios")
 
-module.exports = (dates, db, callAPI) => {
+module.exports = (dates, db, update) => {
   // delete all data currently in the games table.
   db.query(`DELETE FROM games WHERE games.id > 0`)
   // ---------------------------------------------
@@ -32,34 +32,63 @@ module.exports = (dates, db, callAPI) => {
           const away_fourth = game.scores.away.quarter_4 || 0
           const home_total  = game.scores.home.total || 0
           const away_total  = game.scores.away.total || 0
-          
-          db.query(
+
+          if (!update) {
+            db.query(
               `
               INSERT INTO games (
-                game_id, date, timestamp, status, home_team,
-                away_team, home_first, home_second, home_third,
+                game_id, date, timestamp, home_team, away_team
+              ) VALUES (
+                $1::integer, $2::text, $3::integer, $4::text, $5::text
+              )
+              `, [game_id, date, timestamp, home_team, away_team]
+            )
+            .catch(err => console.log(err))
+
+            db.query(
+              `
+              INSERT INTO game_scores (
+                status, home_first, home_second, home_third,
                 home_fourth, away_first, away_second, away_third,
                 away_fourth, home_total, away_total
               ) VALUES (
-                $1::integer, $2::text, $3::integer, $4::text,
-                $5::text, $6::text, $7::integer, $8::integer,
-                $9::integer, $10::integer, $11::integer, $12::integer,
-                $13::integer, $14::integer, $15::integer, $16::integer
-              )`,
-               [ game_id, date, timestamp, status,
-                 home_team, away_team, home_first, home_second,
-                 home_third, home_fourth, away_first, away_second,
-                 away_third, away_fourth, home_total, away_total ]
+                $1::text, $2::integer, $3::integer, $4::integer,
+                $5::integer, $6::integer, $7::integer, $8::integer,
+                $9::integer, $10::integer, $11::integer
+              )
+              `, [status, home_first, home_second, home_third, 
+                  home_fourth, away_first, away_second, away_third, 
+                  away_fourth, home_total, away_total ]
             )
-            .then(res => console.log)
             .catch(err => console.log(err))
-        }
+          }
+          } else {
+            db.query(
+              `
+              UPDATE game_scores SET 
+                status      = $1::text,
+                home_first  = $2::integer,
+                home_second = $3::integer,
+                home_third  = $4::integer,
+                home_fourth = $5::integer,
+                away_first  = $6::integer,
+                away_second = $7::integer,
+                away_third  = $8::integer,
+                away_fourth = $9::integer,
+                home_total  = $10::integer,
+                away_total  = $11::integer
+              `
+            )
+            .catch(err => console.log(err))
+          }
+          */
+          }
       })
     })
     // upon the completion of the update, call the games route to trigger the
     // a websocket call.
     .then(res => {
-      if (callAPI)
+      if (update)
         axios.get("http://localhost:8001/api/games/1")
     })
   })

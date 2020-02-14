@@ -64,14 +64,9 @@ CREATE TABLE teams
   logo_url TEXT NOT NULL
 );
 
-CREATE TABLE games (
+CREATE TABLE game_scores (
   id SERIAL PRIMARY KEY NOT NULL,
-  game_id INTEGER NOT NULL,
-  date TEXT NOT NULL,
-  timestamp BIGINT NOT NULL,
   status TEXT,
-  home_team TEXT NOT NULL,
-  away_team TEXT NOT NULL,
   home_first  SMALLINT NOT NULL,
   home_second SMALLINT NOT NULL,
   home_third  SMALLINT NOT NULL,
@@ -82,6 +77,16 @@ CREATE TABLE games (
   away_fourth SMALLINT NOT NULL,
   home_total  SMALLINT NOT NULL,
   away_total  SMALLINT NOT NULL
+);
+
+CREATE TABLE games (
+  id SERIAL PRIMARY KEY NOT NULL,
+  game_id INTEGER NOT NULL,
+  date TEXT NOT NULL,
+  timestamp BIGINT NOT NULL,
+  home_team TEXT NOT NULL,
+  away_team TEXT NOT NULL,
+  scores INTEGER REFERENCES game_scores ON DELETE CASCADE
 );
 
 CREATE table bet_types

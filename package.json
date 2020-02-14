@@ -17,9 +17,11 @@
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "express-timeout-handler": "^2.2.0",
     "helmet": "^3.21.2",
     "pg": "^7.8.1",
     "socket.io": "^2.2.0",
+    "websocket": "^1.0.31",
     "ws": "^7.0.0"
   },
   "devDependencies": {

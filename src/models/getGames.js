@@ -76,6 +76,7 @@ module.exports = (dates, db, update) => {
                 away_fourth = $9::integer,
                 home_total  = $10::integer,
                 away_total  = $11::integer
+              WHERE game_id = game_scores.id
               `
             )
             .catch(err => console.log(err))

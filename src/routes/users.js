@@ -30,7 +30,7 @@ module.exports = db => {
         if (password === user.rows[0].password) {
           return user.rows[0];
         }
-        return null;
+        return {};
       })
       .catch((err) => console.log(err));
   }

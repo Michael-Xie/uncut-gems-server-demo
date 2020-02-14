@@ -13,7 +13,7 @@ DROP TYPE IF EXISTS status CASCADE;
 CREATE TABLE users
 (
   id SERIAL PRIMARY KEY NOT NULL,
-  user_name VARCHAR(255) NOT NULL,
+  user_name VARCHAR(255) UNIQUE NOT NULL,
   wallet_amount MONEY,
   password VARCHAR(255) NOT NULL,
   stripe_charge_id TEXT

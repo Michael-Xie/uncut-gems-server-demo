@@ -26,7 +26,6 @@ module.exports = db => {
 
 
   const login = function (userName, password) {
-    console.log("in login function")
     return getUserWithUsername(db, userName)
       .then(user => {
         if (password === user.rows[0].password) {
@@ -51,7 +50,6 @@ module.exports = db => {
     .then((result) => {
       const user = result.rows[0];
       if (!user && password.length > 0) {
-        console.log("inside users route")
         db.query(
           `
           INSERT INTO users (
@@ -61,11 +59,9 @@ module.exports = db => {
           ) RETURNING *
           `, [user_name, password, wallet_amount, stripe_charge_id]
         ).then((res) => {
-          console.log("newly inserted", res.rows[0]);
           response.json(res.rows[0]);
         })
       } else {
-        console.log("no user found / password empty");
         response.json({})
       }
     })

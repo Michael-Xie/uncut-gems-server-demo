@@ -40,7 +40,7 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
    * [TODO] set the games date. 
    */
 
-  const games = getGames(["2020-02-11"], db)
+  const games = getGames(["2020-02-11"], db, true)
   games
 
   /*

@@ -17,15 +17,27 @@ ws.on("connection", socket => {
   };
 });
 
-function updateGames(games) {
+function updateGames(data) {
   ws.clients.forEach(function eachClient(client) {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(
-        JSON.stringify({
-          type: "SET_GAMES",
-          games
-        })
-      )
+      if (data.type === "SET_GAMES") {
+        const games = data.games
+        client.send(
+          JSON.stringify({
+            type: "SET_GAMES",
+            games
+          })
+        )
+      }
+      if (data.type === "SET_SCORES") {
+        const scores = data.scores
+        client.send(
+          JSON.stringify({
+            type: "SET_SCORES",
+            scores
+          })
+        )
+      }
     }
   })
 }

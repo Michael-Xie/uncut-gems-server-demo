@@ -5,7 +5,7 @@ module.exports = (db, updateGames) => {
     db.query(`SELECT * FROM game_scores`)
       .then(({rows: scores}) => {
         response.json(scores)
-        updateGames(scores)
+        updateGames({type: "SET_SCORES", scores})
       })
   })
 

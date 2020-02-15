@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS teams CASCADE;
-DROP TABLE IF EXISTS game_scores CASCADE;
 DROP TABLE IF EXISTS games CASCADE;
 DROP TABLE IF EXISTS winnings CASCADE;
 DROP TABLE IF EXISTS parlays CASCADE;
@@ -15,7 +14,7 @@ DROP TYPE IF EXISTS status CASCADE;
 CREATE TABLE users
 (
   id SERIAL PRIMARY KEY NOT NULL,
-  user_name VARCHAR(255) UNIQUE NOT NULL,
+  user_name VARCHAR(255) NOT NULL,
   wallet_amount MONEY,
   password VARCHAR(255) NOT NULL,
   stripe_charge_id TEXT
@@ -78,7 +77,8 @@ CREATE TABLE game_scores (
   away_third  SMALLINT NOT NULL,
   away_fourth SMALLINT NOT NULL,
   home_total  SMALLINT NOT NULL,
-  away_total  SMALLINT NOT NULL
+  away_total  SMALLINT NOT NULL,
+  game_id INTEGER UNIQUE REFERENCES game_scores(game_id) ON DELETE CASCADE
 );
 
 CREATE TABLE games (
@@ -87,8 +87,7 @@ CREATE TABLE games (
   date TEXT NOT NULL,
   timestamp BIGINT NOT NULL,
   home_team TEXT NOT NULL,
-  away_team TEXT NOT NULL,
-  scores INTEGER REFERENCES game_scores(id) ON DELETE CASCADE
+  away_team TEXT NOT NULL
 );
 
 CREATE table bet_types

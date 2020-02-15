@@ -33,15 +33,15 @@ module.exports = (dates, db) => {
             INSERT INTO game_scores (
               status, home_first, home_second, home_third,
               home_fourth, away_first, away_second, away_third,
-              away_fourth, home_total, away_total
+              away_fourth, home_total, away_total, game_id
             ) VALUES (
               $1::text, $2::integer, $3::integer, $4::integer,
               $5::integer, $6::integer, $7::integer, $8::integer,
-              $9::integer, $10::integer, $11::integer
+              $9::integer, $10::integer, $11::integer, $12::integer
             ) RETURNING *;
             `, [status, home_first, home_second, home_third,
                 home_fourth, away_first, away_second, away_third,
-                away_fourth, home_total, away_total]
+                away_fourth, home_total, away_total, game_id]
           )
           .catch(err => console.log(err))
         }

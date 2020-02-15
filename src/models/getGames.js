@@ -1,9 +1,11 @@
 const axios = require("axios")
 
-module.exports = (dates, db) => {
+module.exports = (dates, db, update) => {
   // delete all data currently in the games table.
-  db.query(`DELETE FROM games WHERE games.id > 0`)
-  db.query(`DELETE FROM game_scores WHERE game_scores.id > 0`)
+  if (update) {
+    db.query(`DELETE FROM games WHERE games.id > 0`)
+    db.query(`DELETE FROM game_scores WHERE game_scores.id > 0`)
+  }
   // ---------------------------------------------
   dates.map(date => {
     axios(`https://api-basketball.p.rapidapi.com/games?date=${date}`, {
@@ -40,26 +42,25 @@ module.exports = (dates, db) => {
               INSERT INTO game_scores (
                 status, home_first, home_second, home_third,
                 home_fourth, away_first, away_second, away_third,
-                away_fourth, home_total, away_total
+                away_fourth, home_total, away_total, game_id
               ) VALUES (
                 $1::text, $2::integer, $3::integer, $4::integer,
                 $5::integer, $6::integer, $7::integer, $8::integer,
-                $9::integer, $10::integer, $11::integer
+                $9::integer, $10::integer, $11::integer, $12::integer
               ) RETURNING *;
               `, [status, home_first, home_second, home_third, 
                   home_fourth, away_first, away_second, away_third, 
-                  away_fourth, home_total, away_total]
+                  away_fourth, home_total, away_total, game_id]
             )
             .then(result => {
-              const scores_id = result.rows[0].id
               db.query(
                 `
                 INSERT INTO games (
-                  game_id, date, timestamp, home_team, away_team, scores
+                  game_id, date, timestamp, home_team, away_team
                 ) VALUES (
-                  $1::integer, $2::text, $3::integer, $4::text, $5::text, $6::integer
+                  $1::integer, $2::text, $3::integer, $4::text, $5::text
                 )
-                `, [game_id, date, timestamp, home_team, away_team, scores_id]
+                `, [game_id, date, timestamp, home_team, away_team]
               )
               .catch(err => console.log(err))
             })
@@ -70,9 +71,9 @@ module.exports = (dates, db) => {
     })
     // upon the completion of the update, call the games route to trigger the
     // a websocket call.
-    .then(res => {
-      return
-      //axios.get("http://localhost:8001/api/scores")
+    .then(() => {
+      if (update)
+        axios.get("http://localhost:8001/api/games/1")
     })
   })
 }

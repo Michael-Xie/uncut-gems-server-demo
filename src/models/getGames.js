@@ -1,8 +1,9 @@
 const axios = require("axios")
 
-module.exports = (dates, db, update) => {
+module.exports = (dates, db) => {
   // delete all data currently in the games table.
   db.query(`DELETE FROM games WHERE games.id > 0`)
+  db.query(`DELETE FROM game_scores WHERE game_scores.id > 0`)
   // ---------------------------------------------
   dates.map(date => {
     axios(`https://api-basketball.p.rapidapi.com/games?date=${date}`, {
@@ -32,19 +33,8 @@ module.exports = (dates, db, update) => {
           const away_fourth = game.scores.away.quarter_4 || 0
           const home_total  = game.scores.home.total || 0
           const away_total  = game.scores.away.total || 0
-
-          if (!update) {
-            db.query(
-              `
-              INSERT INTO games (
-                game_id, date, timestamp, home_team, away_team
-              ) VALUES (
-                $1::integer, $2::text, $3::integer, $4::text, $5::text
-              )
-              `, [game_id, date, timestamp, home_team, away_team]
-            )
-            .catch(err => console.log(err))
-
+          
+          if (game_id) {
             db.query(
               `
               INSERT INTO game_scores (
@@ -55,30 +45,24 @@ module.exports = (dates, db, update) => {
                 $1::text, $2::integer, $3::integer, $4::integer,
                 $5::integer, $6::integer, $7::integer, $8::integer,
                 $9::integer, $10::integer, $11::integer
-              )
+              ) RETURNING *;
               `, [status, home_first, home_second, home_third, 
                   home_fourth, away_first, away_second, away_third, 
-                  away_fourth, home_total, away_total ]
+                  away_fourth, home_total, away_total]
             )
-            .catch(err => console.log(err))
-          } else {
-            db.query(
-              `
-              UPDATE game_scores SET 
-                status      = $1::text,
-                home_first  = $2::integer,
-                home_second = $3::integer,
-                home_third  = $4::integer,
-                home_fourth = $5::integer,
-                away_first  = $6::integer,
-                away_second = $7::integer,
-                away_third  = $8::integer,
-                away_fourth = $9::integer,
-                home_total  = $10::integer,
-                away_total  = $11::integer
-              WHERE game_id = game_scores.id
-              `
-            )
+            .then(result => {
+              const scores_id = result.rows[0].id
+              db.query(
+                `
+                INSERT INTO games (
+                  game_id, date, timestamp, home_team, away_team, scores
+                ) VALUES (
+                  $1::integer, $2::text, $3::integer, $4::text, $5::text, $6::integer
+                )
+                `, [game_id, date, timestamp, home_team, away_team, scores_id]
+              )
+              .catch(err => console.log(err))
+            })
             .catch(err => console.log(err))
           }
         }
@@ -87,8 +71,8 @@ module.exports = (dates, db, update) => {
     // upon the completion of the update, call the games route to trigger the
     // a websocket call.
     .then(res => {
-      if (update)
-        axios.get("http://localhost:8001/api/games/1")
+      return
+      //axios.get("http://localhost:8001/api/scores")
     })
   })
 }

@@ -1,12 +1,11 @@
 const router = require("express").Router();
 
 module.exports = (db, updateGames) => {
-  router.get("/games/:id", (request, response) => {
+  router.get("/games", (request, response) => {
     db.query(`SELECT * FROM games`)
       .then(({rows: games}) => {
         response.json(games)
-        if (request.params.id === '1') 
-          updateGames(games)
+        updateGames(games)
       })
   })
 

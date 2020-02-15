@@ -10,6 +10,8 @@ module.exports = (dates, db) => {
       }
     })
     .then(res => {
+      if (res.data.response.length > 0)
+        db.query(`DELETE FROM game_scores WHERE id > 0`)
       // get all the games for the current date.
       res.data.response.forEach(game => {
         if (game.league.name === "NBA") {
@@ -26,33 +28,22 @@ module.exports = (dates, db) => {
           const home_total  = game.scores.home.total || 0
           const away_total  = game.scores.away.total || 0
 
-          db.query(`SELECT * FROM games`)
-            .then(result => {
-              result.rows.forEach(row => {
-                const id = row.id
-                db.query(
-                  `
-                  UPDATE game_scores SET 
-                    status      = $1::text,
-                    home_first  = $2::integer,
-                    home_second = $3::integer,
-                    home_third  = $4::integer,
-                    home_fourth = $5::integer,
-                    away_first  = $6::integer,
-                    away_second = $7::integer,
-                    away_third  = $8::integer,
-                    away_fourth = $9::integer,
-                    home_total  = $10::integer,
-                    away_total  = $11::integer
-                  WHERE id = $12::integer
-                  `
-                , [status, home_first, home_second, home_third,
-                   home_fourth, away_first, away_second, away_third,
-                   away_fourth, home_total, away_total, id]
-                )
-                .catch(err => console.log(err))
-              })
-            })
+          db.query(
+            `
+            INSERT INTO game_scores (
+              status, home_first, home_second, home_third,
+              home_fourth, away_first, away_second, away_third,
+              away_fourth, home_total, away_total
+            ) VALUES (
+              $1::text, $2::integer, $3::integer, $4::integer,
+              $5::integer, $6::integer, $7::integer, $8::integer,
+              $9::integer, $10::integer, $11::integer
+            ) RETURNING *;
+            `, [status, home_first, home_second, home_third,
+                home_fourth, away_first, away_second, away_third,
+                away_fourth, home_total, away_total]
+          )
+          .catch(err => console.log(err))
         }
       })
     })

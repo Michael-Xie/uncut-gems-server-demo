@@ -51,7 +51,7 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
 
   setInterval(() => {
     getScores(["2020-02-11"], db)
-  }, 15000)
+  }, 30000)
 
   app.use(cors())
   app.use(helmet())

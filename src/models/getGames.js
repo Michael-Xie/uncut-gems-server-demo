@@ -75,7 +75,7 @@ module.exports = (dates, db, update) => {
       if (update) {
         setTimeout(() => {
           axios.get("http://localhost:8001/api/games/1")
-        }, 100)
+        }, 1000)
       }
     })
   })

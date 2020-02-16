@@ -72,8 +72,11 @@ module.exports = (dates, db, update) => {
     // upon the completion of the update, call the games route to trigger the
     // a websocket call.
     .then(() => {
-      if (update)
-        axios.get("http://localhost:8001/api/games/1")
+      if (update) {
+        setTimeout(() => {
+          axios.get("http://localhost:8001/api/games/1")
+        }, 100)
+      }
     })
   })
 }

@@ -39,19 +39,17 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
   /* logic to handle calling the basketball-api and updating the client 
    * [TODO] set the games date. 
    */
-
-  const games = getGames(["2020-02-11"], db, true)
-  games
-
-  /*
-  setInterval(() => {
-    getGames(["2020-02-11"], db)
-  }, 600000)
-  */
+  let date = ["2020-02-11"]
+  getGames(date, db, true)
 
   setInterval(() => {
-    getScores(["2020-02-11"], db)
-  }, 30000)
+    date = ["2020-02-13"]
+    getGames(date, db, true)
+  }, 20000)
+
+  setInterval(() => {
+    getScores(date, db)
+  }, 10000)
 
   app.use(cors())
   app.use(helmet())

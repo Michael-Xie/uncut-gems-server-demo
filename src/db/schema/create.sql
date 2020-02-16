@@ -56,7 +56,7 @@ CREATE TABLE game_scores (
   away_fourth SMALLINT NOT NULL,
   home_total  SMALLINT NOT NULL,
   away_total  SMALLINT NOT NULL,
-  game_id INTEGER UNIQUE REFERENCES game_scores(game_id) ON DELETE CASCADE
+  game_id     SMALLINT NOT NULL
 );
 
 CREATE TABLE games (

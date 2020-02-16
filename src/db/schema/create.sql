@@ -24,8 +24,7 @@ CREATE TABLE parlays
 (
   id SERIAL PRIMARY KEY NOT NULL,
   fee MONEY NOT NULL,
-  current_status status NOT NULL,
-  group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE
+  current_status status NOT NULL
 );
 
 CREATE TABLE winnings

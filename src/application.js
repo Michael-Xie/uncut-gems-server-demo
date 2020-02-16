@@ -10,8 +10,9 @@ const cors       = require("cors")
 const app = express();
 
 const gameRoute   = require("./routes/games")
-const scoresRoute = require("./routes/scores")
+const scoreRoute  = require("./routes/scores")
 const userRoute   = require("./routes/users")
+const parlayRoute = require("./routes/parlays")
 
 const getGames  = require("./models/getGames")
 const getScores = require("./models/getScores")
@@ -45,7 +46,7 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
   setInterval(() => {
     date = ["2020-02-13"]
     getGames(date, db, true)
-  }, 50000)
+  }, 600000)
 
   setInterval(() => {
     getScores(date, db)
@@ -55,8 +56,9 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
   app.use(helmet())
   app.use(bodyparser.json())
   app.use("/api", gameRoute(db, actions.updateGames))
-  app.use("/api", scoresRoute(db, actions.updateGames))
+  app.use("/api", scoreRoute(db, actions.updateGames))
   app.use("/api", userRoute(db))
+  app.use("/api", parlayRoute(db))
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([

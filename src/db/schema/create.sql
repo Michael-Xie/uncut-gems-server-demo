@@ -35,8 +35,7 @@ CREATE TABLE winnings
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE user_bets
-(
+CREATE TABLE user_bets (
   id SERIAL PRIMARY KEY NOT NULL,
   value VARCHAR(255) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
@@ -55,7 +54,7 @@ CREATE TABLE game_scores (
   away_fourth SMALLINT NOT NULL,
   home_total  SMALLINT NOT NULL,
   away_total  SMALLINT NOT NULL,
-  game_id     SMALLINT NOT NULL
+  game_id     INTEGER NOT NULL
 );
 
 CREATE TABLE games (
@@ -67,16 +66,9 @@ CREATE TABLE games (
   away_team TEXT NOT NULL
 );
 
-CREATE table bet_types
-(
-  id serial primary key not null,
-  name varchar(255) not null
-);
-
-CREATE TABLE bets
-(
+CREATE TABLE bets (
   id SERIAL PRIMARY KEY NOT NULL,
-  type_id INTEGER REFERENCES bet_types(id) ON DELETE CASCADE,
-  parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
-  game_id INTEGER REFERENCES games(id) ON DELETE CASCADE
+  type TEXT NOT NULL,
+  parlay_id INTEGER NOT NULL,
+  game_id INTEGER NOT NULL
 );

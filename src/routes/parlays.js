@@ -9,13 +9,15 @@ module.exports = (db) => {
   })
 
   router.post("/parlays", (request, response) => {
-    console.log(request.body)
     db.query(
       `
       INSERT INTO parlays (fee, current_status) 
-      VALUES ($1::integer, $2::status)
+      VALUES ($1::integer, $2::status) RETURNING *
       `, [request.body.fee, request.body.status]
     )
+    .then(({rows: parlay}) => {
+      response.send(parlay)
+    })
   })
 
   return router

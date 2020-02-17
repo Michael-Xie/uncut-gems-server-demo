@@ -52,5 +52,6 @@ module.exports = (dates, db) => {
     .then(res => {
       axios.get("http://localhost:8001/api/scores")
     })
+    .catch(err => console.log(err))
   })
 }

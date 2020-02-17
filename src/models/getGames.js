@@ -78,5 +78,6 @@ module.exports = (dates, db, update) => {
         }, 1000)
       }
     })
+    .catch(err => console.log("ERROR in getGames: ", err))
   })
 }

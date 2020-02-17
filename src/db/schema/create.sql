@@ -1,18 +1,17 @@
 DROP TABLE IF EXISTS games CASCADE;
-DROP TABLE IF EXISTS winnings CASCADE;
 DROP TABLE IF EXISTS parlays CASCADE;
 DROP TABLE IF EXISTS bets CASCADE;
 DROP TABLE IF EXISTS bet_types CASCADE;
 DROP TABLE IF EXISTS user_bets CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS game_scores CASCADE;
+DROP TABLE IF EXISTS participants;
 DROP TYPE IF EXISTS status CASCADE;
 
-CREATE TABLE users
-(
+CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  user_name VARCHAR(255) NOT NULL,
-  wallet_amount MONEY,
+  user_name VARCHAR(255) UNIQUE NOT NULL,
+  wallet_amount INTEGER,
   password VARCHAR(255) NOT NULL,
   stripe_charge_id TEXT
 );
@@ -20,19 +19,17 @@ CREATE TABLE users
 CREATE TYPE status AS ENUM
 ('open', 'in-progress', 'close');
 
-CREATE TABLE parlays
-(
+CREATE TABLE parlays (
   id SERIAL PRIMARY KEY NOT NULL,
-  fee MONEY NOT NULL,
+  fee INTEGER NOT NULL,
   current_status status NOT NULL
 );
 
-CREATE TABLE winnings
-(
+CREATE TABLE participants (
   id SERIAL PRIMARY KEY NOT NULL,
-  payout MONEY NOT NULL,
+  payout INTEGER NOT NULL,
   parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+  user_name TEXT REFERENCES users(user_name) ON DELETE CASCADE
 );
 
 CREATE TABLE user_bets (

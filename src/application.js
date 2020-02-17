@@ -14,6 +14,7 @@ const scoreRoute  = require("./routes/scores")
 const userRoute   = require("./routes/users")
 const parlayRoute = require("./routes/parlays")
 const betRoute    = require("./routes/bets")
+const particRoute = require("./routes/participants")
 
 const getGames  = require("./models/getGames")
 const getScores = require("./models/getScores")
@@ -62,6 +63,7 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
   app.use("/api", userRoute(db))
   app.use("/api", parlayRoute(db))
   app.use("/api", betRoute(db))
+  app.use("/api", particRoute(db))
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([

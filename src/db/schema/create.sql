@@ -21,6 +21,8 @@ CREATE TYPE status AS ENUM
 
 CREATE TABLE parlays (
   id SERIAL PRIMARY KEY NOT NULL,
+  admin INTEGER NOT NULL,
+  name TEXT NOT NULL,
   fee INTEGER NOT NULL,
   current_status status NOT NULL
 );
@@ -30,13 +32,6 @@ CREATE TABLE participants (
   payout INTEGER NOT NULL,
   parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
   user_name TEXT REFERENCES users(user_name) ON DELETE CASCADE
-);
-
-CREATE TABLE user_bets (
-  id SERIAL PRIMARY KEY NOT NULL,
-  value VARCHAR(255) NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  bet_id INTEGER REFERENCES bets(id) ON DELETE CASCADE,
 );
 
 CREATE TABLE game_scores (
@@ -69,4 +64,12 @@ CREATE TABLE bets (
   type TEXT NOT NULL,
   parlay_id INTEGER NOT NULL,
   game_id INTEGER NOT NULL
+);
+
+CREATE TABLE user_bets (
+  id SERIAL PRIMARY KEY NOT NULL,
+  selection VARCHAR(255) NOT NULL,
+  bet_id INTEGER REFERENCES bets(id) ON DELETE CASCADE,
+  parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );

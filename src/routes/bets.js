@@ -1,7 +1,46 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.get("/bets/:id", (request, response) => {
+  router.get("/bet/user/:id", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM bets
+      WHERE parlay_id = $1::integer
+      `, [request.params.id]
+    )
+      .then(({rows: bets}) => {
+        response.send(bets)
+      })
+  })
+
+  router.get("/bet/fill/:id", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM user_bets
+      WHERE user_id = $1::integer
+      `, [request.params.id]
+    )
+      .then(({rows: bets}) => {
+        response.send(bets)
+      })
+  })
+
+  router.get("/bet/:id", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM bets
+      WHERE parlay_id = $1::integer
+      `, [request.params.id]
+    )
+      .then(({rows: bets}) => {
+        response.send(bets)
+      })
+  })
+
+  router.get("/bets", (request, response) => {
     db.query(`SELECT * FROM bets`)
       .then(({rows: bets}) => {
         response.send(bets)

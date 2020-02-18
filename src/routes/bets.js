@@ -40,14 +40,14 @@ module.exports = (db) => {
       })
   })
 
-  router.get("/bet", (request, response) => {
+  router.get("/bets", (request, response) => {
     db.query(`SELECT * FROM bets`)
       .then(({rows: bets}) => {
         response.send(bets)
       })
   })
 
-  router.post("/bet", (request, response) => {
+  router.post("/bets", (request, response) => {
     db.query(
       `
       INSERT INTO bets (type, parlay_id, game_id) 

@@ -29,6 +29,11 @@ VALUES
   ('FT', 10, 20, 30, 40, 10, 20, 30, 50, 100, 110, 26120),
   ('FT', 10, 20, 30, 50, 10, 20, 30, 40, 110, 100, 26429);
 
+INSERT INTO parlays
+(id, fee, current_status, admin, name)
+VALUES
+(1, 500, 'close', 3, 'parlay1'),
+(2, 1000, 'open', 1, 'parlay2');
 
 INSERT INTO participants
 (payout, parlay_id, user_name)
@@ -38,11 +43,7 @@ VALUES
 (0, 1, 'jamiekaram'),
 (0, 2, 'anthonypisani');
 
-INSERT INTO parlays
-(id, fee, current_status)
-VALUES
-(1, 5, 'close'),
-(2, 10, 'open');
+
 
 
 -- pickem
@@ -59,43 +60,14 @@ VALUES
 (3, 'pickem', 2, 26120);
 
 INSERT INTO user_bets
-(value, user_id, bet_id)
+(selection, user_id, bet_id, parlay_id)
 VALUES
-('Los Angeles Clippers', 1, 1),
-('Houston Rockets', 2, 1),
-('Los Angeles Clippers', 3, 1),
+('Los Angeles Clippers', 1, 1, 1),
+('Houston Rockets', 2, 1, 1),
+('Los Angeles Clippers', 3, 1, 1),
 
-(100, 1, 2),
-(200, 2, 2),
-(300, 3, 2),
+(100, 1, 2, 1),
+(200, 2, 2, 1),
+(300, 3, 2, 1),
 
-('Los Angeles Clippers', 3, 3);
-
-
--- CREATE TABLE user_bets (
---   id SERIAL PRIMARY KEY NOT NULL,
---   value VARCHAR(255) NOT NULL,
---   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
---   bet_id INTEGER REFERENCES bets(id) ON DELETE CASCADE,
--- );
-
--- CREATE TABLE bets (
---   id SERIAL PRIMARY KEY NOT NULL,
---   type TEXT NOT NULL,
---   parlay_id INTEGER NOT NULL,
---   game_id INTEGER NOT NULL
--- );
-
--- CREATE TABLE parlays (
---   id SERIAL PRIMARY KEY NOT NULL,
---   fee INTEGER NOT NULL,
---   current_status status NOT NULL
--- );
-
--- CREATE TABLE participants (
---   id SERIAL PRIMARY KEY NOT NULL,
---   payout INTEGER NOT NULL,
---   parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
---   user_name TEXT REFERENCES users(user_name) ON DELETE CASCADE
--- );
-
+('Los Angeles Clippers', 3, 3, 2);

@@ -1,14 +1,26 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.get("/participants", (request, response) => {
+  router.get(":id/participants/:user_name", (request, response) => {
+    db.query(
+      `SELECT * 
+       FROM participants
+       WHERE user_name = $1::text
+      `, [request.params.user_name]
+    )
+      .then(({rows: user_parlays}) => {
+        response.send(user_parlays)
+      })
+  })
+
+  router.get("/:id/participants", (request, response) => {
     db.query(`SELECT * FROM participants`)
       .then(({rows: participants}) => {
         response.send(participants)
       })
   })
 
-  router.post("/participants", (request, response) => {
+  router.post("/:id/participants", (request, response) => {
     db.query(
       `
       INSERT INTO participants (payout, user_name, parlay_id) 

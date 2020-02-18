@@ -48,11 +48,11 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
   setInterval(() => {
     date = ["2020-02-13"]
     getGames(date, db, true)
-  }, 600000)
+  }, 60000)
 
   setInterval(() => {
     getScores(date, db)
-  }, 60000)
+  }, 20000)
 
   app.use(cors())
   app.use(helmet())
@@ -62,8 +62,8 @@ module.exports = function application(ENV, actions = { updateGames: () => {}}) {
   app.use("/api", scoreRoute(db, actions.updateGames))
   app.use("/api", userRoute(db))
   app.use("/api", parlayRoute(db))
-  app.use("/api", betRoute(db))
-  app.use("/api", particRoute(db))
+  app.use("/api/parlay", betRoute(db))
+  app.use("/api/parlay", particRoute(db))
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([

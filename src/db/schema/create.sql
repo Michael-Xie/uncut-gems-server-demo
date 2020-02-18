@@ -51,12 +51,12 @@ CREATE TABLE game_scores (
   away_fourth SMALLINT NOT NULL,
   home_total  SMALLINT NOT NULL,
   away_total  SMALLINT NOT NULL,
-  game_id     INTEGER NOT NULL
+  game_id     INTEGER UNIQUE NOT NULL
 );
 
 CREATE TABLE games (
   id SERIAL PRIMARY KEY NOT NULL,
-  game_id INTEGER NOT NULL,
+  game_id INTEGER UNIQUE NOT NULL,
   date TEXT NOT NULL,
   timestamp BIGINT NOT NULL,
   home_team TEXT NOT NULL,

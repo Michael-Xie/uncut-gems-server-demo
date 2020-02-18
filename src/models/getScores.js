@@ -10,8 +10,8 @@ module.exports = (dates, db) => {
       }
     })
     .then(res => {
-      if (res.data.response.length > 0)
-        db.query(`DELETE FROM game_scores WHERE id > 0`)
+      // if (res.data.response.length > 0)
+        // db.query(`DELETE FROM game_scores WHERE id > 0`)
       // get all the games for the current date.
       res.data.response.forEach(game => {
         if (game.league.name === "NBA") {
@@ -38,7 +38,22 @@ module.exports = (dates, db) => {
               $1::text, $2::integer, $3::integer, $4::integer,
               $5::integer, $6::integer, $7::integer, $8::integer,
               $9::integer, $10::integer, $11::integer, $12::integer
-            ) RETURNING *;
+            ) 
+            ON CONFLICT (game_id)
+            DO UPDATE SET 
+              status = Excluded.status,
+              home_first = Excluded.home_first,
+              home_second = Excluded.home_second,
+              home_third = Excluded.home_third,
+              home_fourth = Excluded.home_fourth,
+              away_first = Excluded.away_first,
+              away_second = Excluded.away_second,
+              away_third = Excluded.away_third,
+              away_fourth = Excluded.away_fourth,
+              home_total = Excluded.home_total,
+              away_total = Excluded.away_total
+
+            RETURNING *;
             `, [status, home_first, home_second, home_third,
                 home_fourth, away_first, away_second, away_third,
                 away_fourth, home_total, away_total, game_id]

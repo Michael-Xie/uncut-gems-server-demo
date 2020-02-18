@@ -2,10 +2,10 @@ const axios = require("axios")
 
 module.exports = (dates, db, update) => {
   // delete all data currently in the games table.
-  if (update) {
-    db.query(`DELETE FROM games WHERE games.id > 0`)
-    db.query(`DELETE FROM game_scores WHERE game_scores.id > 0`)
-  }
+  // if (update) {
+  //   db.query(`DELETE FROM games WHERE games.id > 0`)
+  //   db.query(`DELETE FROM game_scores WHERE game_scores.id > 0`)
+  // }
   // ---------------------------------------------
   dates.map(date => {
     axios(`https://api-basketball.p.rapidapi.com/games?date=${date}`, {
@@ -35,7 +35,6 @@ module.exports = (dates, db, update) => {
           const away_fourth = game.scores.away.quarter_4 || 0
           const home_total  = game.scores.home.total || 0
           const away_total  = game.scores.away.total || 0
-          
           if (game_id) {
             db.query(
               `
@@ -47,23 +46,53 @@ module.exports = (dates, db, update) => {
                 $1::text, $2::integer, $3::integer, $4::integer,
                 $5::integer, $6::integer, $7::integer, $8::integer,
                 $9::integer, $10::integer, $11::integer, $12::integer
-              ) RETURNING *;
+              )
+              ON CONFLICT (game_id)
+              DO UPDATE SET 
+                status = Excluded.status,
+                home_first = Excluded.home_first,
+                home_second = Excluded.home_second,
+                home_third = Excluded.home_third,
+                home_fourth = Excluded.home_fourth,
+                away_first = Excluded.away_first,
+                away_second = Excluded.away_second,
+                away_third = Excluded.away_third,
+                away_fourth = Excluded.away_fourth,
+                home_total = Excluded.home_total,
+                away_total = Excluded.away_total
+  
+              RETURNING *;
+  
               `, [status, home_first, home_second, home_third, 
                   home_fourth, away_first, away_second, away_third, 
                   away_fourth, home_total, away_total, game_id]
-            )
-            .then(result => {
-              db.query(
-                `
-                INSERT INTO games (
-                  game_id, date, timestamp, home_team, away_team
-                ) VALUES (
-                  $1::integer, $2::text, $3::integer, $4::text, $5::text
-                )
-                `, [game_id, date, timestamp, home_team, away_team]
+            );
+            db.query(
+              `
+              INSERT INTO games (
+                game_id, date, timestamp, home_team, away_team
+              ) VALUES (
+                $1::integer, $2::text, $3::integer, $4::text, $5::text
               )
-              .catch(err => console.log(err))
-            })
+              ON CONFLICT (game_id)
+              DO NOTHING;
+              `, [game_id, date, timestamp, home_team, away_team]
+            )
+
+            // .then(result => {
+            //   db.query(
+            //     `
+            //     INSERT INTO games (
+            //       game_id, date, timestamp, home_team, away_team
+            //     ) VALUES (
+            //       $1::integer, $2::text, $3::integer, $4::text, $5::text
+            //     )
+            //     ON CONFLICT (game_id)
+            //     DO NOTHING;
+            //     `, [game_id, date, timestamp, home_team, away_team]
+            //   )
+            //   .catch(err => console.log(err))
+            // })
             .catch(err => console.log(err))
           }
         }

@@ -21,10 +21,11 @@ CREATE TYPE status AS ENUM
 
 CREATE TABLE parlays (
   id SERIAL PRIMARY KEY NOT NULL,
-  admin INTEGER NOT NULL,
   name TEXT NOT NULL,
   fee INTEGER NOT NULL,
-  current_status status NOT NULL
+  current_status status NOT NULL,
+  admin INTEGER REFERENCES users(id) ON DELETE CASCADE
+
 );
 
 CREATE TABLE participants (

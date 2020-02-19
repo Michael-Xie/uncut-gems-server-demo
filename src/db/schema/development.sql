@@ -30,10 +30,10 @@ VALUES
   ('FT', 10, 20, 30, 50, 10, 20, 30, 40, 110, 100, 26429);
 
 INSERT INTO parlays
-(id, fee, current_status, admin, name)
+(fee, current_status, admin, name)
 VALUES
-(1, 500, 'close', 3, 'parlay1'),
-(2, 1000, 'open', 1, 'parlay2');
+(500, 'close', 3, 'parlay1'),
+(1000, 'open', 1, 'parlay2');
 
 INSERT INTO participants
 (payout, parlay_id, user_name)
@@ -43,9 +43,6 @@ VALUES
 (0, 1, 'jamiekaram'),
 (0, 2, 'anthonypisani');
 
-
-
-
 -- pickem
 -- points_tf
 -- points_th
@@ -53,11 +50,11 @@ VALUES
 -- race_to_100
 
 INSERT INTO bets
-(id, type, parlay_id, game_id)
+(type, parlay_id, game_id)
 VALUES
-(1, 'pickem', 1, 26120),
-(2, 'points_tf', 1, 26429),
-(3, 'pickem', 2, 26120);
+('pickem', 1, 26120),
+('points_tf', 1, 26429),
+('pickem', 2, 26120);
 
 INSERT INTO user_bets
 (selection, user_id, bet_id, parlay_id)

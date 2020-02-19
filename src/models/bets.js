@@ -40,5 +40,20 @@ module.exports = {
     queryString += condition;
     const values = [...games]
     return db.query(queryString, values);
+  },
+  getUserBetsGameScoresByParlay: function(db, parlayId) {
+    let queryString = 
+    `
+    SELECT * FROM user_bets
+    JOIN bets ON bets.id = bet_id
+    JOIN parlays ON parlays.id = bets.parlay_id
+    JOIN games ON games.game_id = bets.game_id
+    JOIN game_scores ON games.game_id = game_scores.game_id
+    JOIN users ON user_bets.user_id = users.id
+    WHERE parlays.id = $1;
+    `
+    const values = [parlayId];
+    return db.query(queryString, values);
+
   }
 }

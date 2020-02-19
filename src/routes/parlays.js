@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-module.exports = (db) => {
+module.exports = (db, update) => {
   router.get("/parlay/:id", (request, response) => {
     db.query(
       `
@@ -24,6 +24,7 @@ module.exports = (db) => {
     )
       .then(({rows: parlays}) => {
         response.send(parlays)
+        update({type: "SET_PARLAY", parlays})
       })
   })
 

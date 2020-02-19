@@ -33,7 +33,8 @@ module.exports = (db, update) => {
       `
       SELECT * 
       FROM parlays
-      WHERE name LIKE $1::text
+      WHERE current_status = 'open'
+      AND name LIKE $1::text
       `, [request.params.name + '%']
     )
       .then(({rows: parlays}) => {

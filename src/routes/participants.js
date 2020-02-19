@@ -14,7 +14,12 @@ module.exports = (db) => {
   })
 
   router.get("/:id/participants", (request, response) => {
-    db.query(`SELECT * FROM participants`)
+    db.query(
+      `SELECT * 
+       FROM participants 
+       WHERE parlay_id = $1::integer
+      `, [request.params.id]
+    )
       .then(({rows: participants}) => {
         response.send(participants)
       })

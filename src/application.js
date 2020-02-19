@@ -59,8 +59,8 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   app.use(bodyparser.json())
   
   app.use("/api/test", testRoute(db, betsHelper))
-  app.use("/api", gameRoute(db, actions.updateGames))
-  app.use("/api", scoreRoute(db, actions.updateGames))
+  app.use("/api", gameRoute(db, actions.updateState))
+  app.use("/api", scoreRoute(db, actions.updateState))
   app.use("/api", userRoute(db))
   app.use("/api", parlayRoute(db, actions.updateState))
   app.use("/api/parlay", betRoute(db))

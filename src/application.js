@@ -38,30 +38,27 @@ function read(file) {
   });
 }
 
-module.exports = function application(ENV, actions = { updateGames: () => {}}) {
-  /* logic to handle calling the basketball-api and updating the client 
-   * [TODO] set the games date. 
-   */
+module.exports = function application(ENV, actions = { updateState: () => {}}) {
   let date = ["2020-02-11"]
   getGames(date, db, true)
 
   setInterval(() => {
     date = ["2020-02-13"]
     getGames(date, db, true)
-  }, 60000)
+  }, 600000)
 
   setInterval(() => {
     getScores(date, db)
-  }, 20000)
+  }, 60000)
 
   app.use(cors())
   app.use(helmet())
   app.use(bodyparser.json())
 
-  app.use("/api", gameRoute(db, actions.updateGames))
-  app.use("/api", scoreRoute(db, actions.updateGames))
+  app.use("/api", gameRoute(db, actions.updateState))
+  app.use("/api", scoreRoute(db, actions.updateState))
   app.use("/api", userRoute(db))
-  app.use("/api", parlayRoute(db))
+  app.use("/api", parlayRoute(db, actions.updateState))
   app.use("/api/parlay", betRoute(db))
   app.use("/api/parlay", particRoute(db))
 

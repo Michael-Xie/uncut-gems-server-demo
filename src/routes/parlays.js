@@ -14,6 +14,32 @@ module.exports = (db) => {
       })
   })
 
+  router.get("/parlays/open", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM parlays
+      WHERE current_status = 'open'
+      `
+    )
+      .then(({rows: parlays}) => {
+        response.send(parlays)
+      })
+  })
+
+  router.get("/parlays/:name", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM parlays
+      WHERE name LIKE $1::text
+      `, [request.params.name + '%']
+    )
+      .then(({rows: parlays}) => {
+        response.send(parlays)
+      })
+  })
+
   router.get("/parlays", (request, response) => {
     db.query(`SELECT * FROM parlays`)
       .then(({rows: parlays}) => {

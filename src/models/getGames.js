@@ -78,28 +78,13 @@ module.exports = (dates, db, update) => {
               DO NOTHING;
               `, [game_id, date, timestamp, home_team, away_team]
             )
-
-            // .then(result => {
-            //   db.query(
-            //     `
-            //     INSERT INTO games (
-            //       game_id, date, timestamp, home_team, away_team
-            //     ) VALUES (
-            //       $1::integer, $2::text, $3::integer, $4::text, $5::text
-            //     )
-            //     ON CONFLICT (game_id)
-            //     DO NOTHING;
-            //     `, [game_id, date, timestamp, home_team, away_team]
-            //   )
-            //   .catch(err => console.log(err))
-            // })
             .catch(err => console.log(err))
           }
         }
       })
     })
-    // upon the completion of the update, call the games route to trigger the
-    // a websocket call.
+    // upon the completion of the update, 
+    // call the games route to trigger the websocket call.
     .then(() => {
       if (update) {
         setTimeout(() => {

@@ -70,4 +70,4 @@ VALUES
 (200, 2, 2, 1),
 (300, 3, 2, 1),
 
-('Los Angeles Clippers', 3, 3, 2);
+('Los Angeles Clippers', 1, 3, 2);

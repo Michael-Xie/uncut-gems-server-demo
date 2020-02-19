@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.get(":id/participants/:user_name", (request, response) => {
+  router.get("/:id/participants/:user_name", (request, response) => {
     db.query(
       `SELECT * 
        FROM participants

@@ -1,7 +1,7 @@
 const PORT = process.env.PORT || 8001;
 const ENV = require("./environment");
 
-const app = require("./application")(ENV, { updateGames });
+const app = require("./application")(ENV, { updateState });
 const server = require("http").Server(app);
 
 const WebSocket = require("ws");
@@ -17,9 +17,19 @@ ws.on("connection", socket => {
   };
 });
 
-function updateGames(data) {
+function updateState(data) {
   ws.clients.forEach(function eachClient(client) {
     if (client.readyState === WebSocket.OPEN) {
+      if (data.type === "SET_PARLAY") {
+        const parlays = data.parlays
+        client.send(
+          JSON.stringify({
+            type: "SET_PARLAY",
+            parlays
+          })
+        )
+      }
+
       if (data.type === "SET_GAMES") {
         const games = data.games
         client.send(

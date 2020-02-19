@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-module.exports = (db) => {
+module.exports = (db, update) => {
   router.get("/parlay/:id", (request, response) => {
     db.query(
       `
@@ -11,6 +11,33 @@ module.exports = (db) => {
     )
       .then(({rows: parlay}) => {
         response.send(parlay)
+      })
+  })
+
+  router.get("/parlays/open", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM parlays
+      WHERE current_status = 'open'
+      `
+    )
+      .then(({rows: parlays}) => {
+        response.send(parlays)
+        update({type: "SET_PARLAY", parlays})
+      })
+  })
+
+  router.get("/parlays/:name", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM parlays
+      WHERE name LIKE $1::text
+      `, [request.params.name + '%']
+    )
+      .then(({rows: parlays}) => {
+        response.send(parlays)
       })
   })
 

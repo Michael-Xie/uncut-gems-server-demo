@@ -114,8 +114,13 @@ module.exports = (db, helper) => {
         userRanking[bet.user_name] = bet.rank;
       }
     }
-    
-    response.json(userRanking);
+    for (const user_name of Object.keys(userRanking)) {
+      overallRanking.push({user_name:user_name, rank: userRanking[user_name]})
+    }
+    overallRanking.sort((a,b) => a.rank - b.rank);
+    userRankByBetType['overall_rank'] = overallRanking;
+
+    response.json(userRankByBetType);
     // if (userRankByBetType['points_tf']) {
     //   userRankByBetType['points_tf'].sort((a, b) => {
     //     return a.intermediate - b.intermediate;

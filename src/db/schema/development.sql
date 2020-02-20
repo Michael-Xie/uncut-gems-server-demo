@@ -6,11 +6,11 @@ VALUES
   ('michaelxie', '123');
 
 INSERT INTO games
-  (game_id, date, timestamp, home_team, away_team)
+  (game_id, status, date, timestamp, home_team, away_team)
 VALUES
-  (26120, '2015-11-08T03:30:00+00:00', 1446953400, 'Los Angeles Clippers', 'Houston Rockets'),
-  (26429, '2015-12-20T01:00:00+00:00', 1450573200, 'Atlanta Hawks', 'Boston Celtics'),
-  (5555, '2019-11-26T06:35:00-05:00', 1574768100, 'Cleveland Cavaliers', 'Dallas Mavericks');
+  (26120, 'FT', '2015-11-08T03:30:00+00:00', 1446953400, 'Los Angeles Clippers', 'Houston Rockets'),
+  (26429, 'FT', '2015-12-20T01:00:00+00:00', 1450573200, 'Atlanta Hawks', 'Boston Celtics'),
+  (5555,  'Q1', '2019-11-26T06:35:00-05:00', 1574768100, 'Cleveland Cavaliers', 'Dallas Mavericks');
 
 INSERT INTO game_scores
   ( status,

@@ -53,6 +53,7 @@ CREATE TABLE game_scores (
 
 CREATE TABLE games (
   id SERIAL PRIMARY KEY NOT NULL,
+  status TEXT,
   game_id INTEGER UNIQUE NOT NULL,
   date TEXT NOT NULL,
   timestamp BIGINT NOT NULL,

@@ -70,13 +70,13 @@ module.exports = (dates, db, update) => {
               db.query(
                 `
               INSERT INTO games (
-                game_id, date, timestamp, home_team, away_team
+                game_id, date, timestamp, home_team, away_team, status
               ) VALUES (
-                $1::integer, $2::text, $3::integer, $4::text, $5::text
+                $1::integer, $2::text, $3::integer, $4::text, $5::text, $6::text
               )
               ON CONFLICT (game_id)
               DO NOTHING;
-              `, [game_id, date, timestamp, home_team, away_team]
+              `, [game_id, date, timestamp, home_team, away_team, status]
               )
                 .catch(err => console.log(err))
             }

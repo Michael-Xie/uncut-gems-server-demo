@@ -6,7 +6,8 @@ module.exports = (db) => {
       `SELECT * 
        FROM participants
        WHERE user_name = $1::text
-      `, [request.params.user_name]
+       AND parlay_id = $2::integer
+      `, [request.params.user_name, request.params.id]
     )
       .then(({rows: user_parlays}) => {
         response.send(user_parlays)

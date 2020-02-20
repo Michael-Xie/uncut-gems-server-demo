@@ -23,7 +23,6 @@ module.exports = (db, update) => {
       `
     )
       .then(({rows: parlays}) => {
-        parlays[0].current_status = 'close'
         response.send(parlays)
         update({type: "SET_ACTIVE", activeParlays: parlays})
       })

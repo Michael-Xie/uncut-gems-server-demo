@@ -48,10 +48,8 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
 
   setInterval(() => {
     axios.get("http://localhost:8001/api/parlays/active")
-      .then(res => {
-        console.log(res)
-      })
-  }, 10000)
+      .catch(err => console.log(err))
+  }, 60000)
 
   setInterval(() => {
     date = ["2020-02-13"]

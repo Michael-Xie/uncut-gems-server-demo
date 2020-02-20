@@ -13,10 +13,6 @@ module.exports = (dates, db, update) => {
       "headers": {
         "x-rapidapi-host": "api-basketball.p.rapidapi.com",
         "x-rapidapi-key": "d8dfc5cbfdmshbb0b69d2a790b3dp1ba90ejsn8f36ab430b8b"
-      },
-      "params": {
-        "timezone": "America%2FToronto",
-        "date": date
       }
     })
       .then(res => {

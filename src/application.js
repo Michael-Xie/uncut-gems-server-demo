@@ -43,18 +43,8 @@ function read(file) {
 }
 
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
-  let date = ["2020-02-11"]
+  let date = ["2020-02-23"]
   getGames(date, db, true)
-
-  setInterval(() => {
-    axios.get("http://localhost:8001/api/parlays/active")
-      .catch(err => console.log(err))
-  }, 60000)
-
-  setInterval(() => {
-    date = ["2020-02-13"]
-    getGames(date, db, true)
-  }, 600000)
 
   setInterval(() => {
     getScores(date, db)

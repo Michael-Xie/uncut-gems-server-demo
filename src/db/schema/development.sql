@@ -54,14 +54,14 @@ VALUES
 -- race_to_100
 
 INSERT INTO bets
-(id, type, parlay_id, game_id)
+(type, parlay_id, game_id)
 VALUES
-(1, 'pickem', 1, 26120),
-(2, 'points_tf', 1, 26429),
-(3, 'race_to_10', 1, 5555),
+('pickem', 1, 26120),
+('points_tf', 1, 26429),
+('race_to_10', 1, 5555),
 
-(4, 'pickem', 2, 26120),
-(5, 'points_th', 2, 5555);
+('pickem', 2, 26120),
+('points_th', 2, 5555);
 
 INSERT INTO user_bets
 (selection, user_id, bet_id, parlay_id)

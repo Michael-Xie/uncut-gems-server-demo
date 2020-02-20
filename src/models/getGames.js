@@ -8,7 +8,7 @@ module.exports = (dates, db, update) => {
   // }
   // ---------------------------------------------
   dates.map(date => {
-    axios(`https://api-basketball.p.rapidapi.com/games`, {
+    axios(`https://api-basketball.p.rapidapi.com/games?date=${date}`, {
       "method": "GET",
       "headers": {
         "x-rapidapi-host": "api-basketball.p.rapidapi.com",

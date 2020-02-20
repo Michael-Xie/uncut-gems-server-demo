@@ -43,7 +43,7 @@ function read(file) {
 }
 
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
-  let date = ["2020-02-23"]
+  let date = ["2020-02-21"]
   getGames(date, db, true)
 
   setInterval(() => {

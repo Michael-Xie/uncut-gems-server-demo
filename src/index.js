@@ -20,15 +20,16 @@ ws.on("connection", socket => {
 function updateState(data) {
   ws.clients.forEach(function eachClient(client) {
     if (client.readyState === WebSocket.OPEN) {
-      if (data.type === "SET_PARLAY") {
-        const parlays = data.parlays
+      if (data.type === "SET_ACTIVE") {
+        const parlays = data.activeParlays
         client.send(
           JSON.stringify({
-            type: "SET_PARLAY",
-            parlays
+            type: "SET_ACTIVE",
+            activeParlays: parlays
           })
         )
       }
+
       if (data.type === "SET_GAMES") {
         const games = data.games
         client.send(

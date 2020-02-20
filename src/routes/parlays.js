@@ -14,6 +14,21 @@ module.exports = (db, update) => {
       })
   })
 
+  router.get("/parlays/active", (request, response) => {
+    db.query(
+      `
+      SELECT * 
+      FROM parlays
+      WHERE current_status = 'in-progress'
+      `
+    )
+      .then(({rows: parlays}) => {
+        parlays[0].current_status = 'close'
+        response.send(parlays)
+        update({type: "SET_ACTIVE", activeParlays: parlays})
+      })
+  })
+
   router.get("/parlays/open", (request, response) => {
     db.query(
       `
@@ -58,7 +73,6 @@ module.exports = (db, update) => {
     )
     .then(({rows: parlay}) => {
       response.send(parlay)
-      update({type: "SET_PARLAY", parlays: parlay})
     })
   })
 

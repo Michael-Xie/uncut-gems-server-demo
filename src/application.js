@@ -21,6 +21,7 @@ const getGames  = require("./models/getGames")
 const getScores = require("./models/getScores")
 const betsHelper = require("./models/bets")
 
+const axios = require("axios")
 
 const db = require("./db")
 
@@ -44,6 +45,13 @@ function read(file) {
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
   let date = ["2020-02-11"]
   getGames(date, db, true)
+
+  setInterval(() => {
+    axios.get("http://localhost:8001/api/parlays/active")
+      .then(res => {
+        console.log(res)
+      })
+  }, 10000)
 
   setInterval(() => {
     date = ["2020-02-13"]

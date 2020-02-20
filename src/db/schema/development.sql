@@ -1,9 +1,9 @@
 INSERT INTO users
-  (user_name, password)
+  (user_name, password, wallet_amount)
 VALUES
-  ('anthonypisani', '123'),
-  ('jamiekaram', '123'),
-  ('michaelxie', '123');
+  ('anthonypisani', '123', 10000),
+  ('jamiekaram', '123', 10000),
+  ('michaelxie', '123', 10000);
 
 INSERT INTO games
   (game_id, status, date, timestamp, home_team, away_team)

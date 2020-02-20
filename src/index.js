@@ -29,7 +29,6 @@ function updateState(data) {
           })
         )
       }
-
       if (data.type === "SET_GAMES") {
         const games = data.games
         client.send(

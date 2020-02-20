@@ -24,7 +24,6 @@ module.exports = (db, update) => {
     )
       .then(({rows: parlays}) => {
         response.send(parlays)
-        update({type: "SET_PARLAY", parlays})
       })
   })
 
@@ -59,6 +58,7 @@ module.exports = (db, update) => {
     )
     .then(({rows: parlay}) => {
       response.send(parlay)
+      update({type: "SET_PARLAY", parlays: parlay})
     })
   })
 

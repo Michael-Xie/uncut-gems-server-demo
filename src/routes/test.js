@@ -63,6 +63,8 @@ module.exports = (db, helper) => {
         const actual = userBet.home_total > userBet.away_total? userBet.home_team: userBet.away_team;
         const expect = userBet.selection;
         userRank = actual === expect ? { user_name: userBet.user_name, rank: 1 } : { user_name: userBet.user_name, rank: 2 };
+      } else {
+        continue;
       }
 
 

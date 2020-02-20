@@ -56,11 +56,11 @@ module.exports = (db, helper) => {
         const diff = Math.abs(actual - expect);
         userRank = { user_name: userBet.user_name, intermediate: diff };
       } else if (userBet.type === 'race_to_100' && (userBet.home_total >= 100 || userBet.away_total >= 100)) {
-        const actual = userBet.home_total > userBet.away_total? home_team: away_team;
+        const actual = userBet.home_total > userBet.away_total? userBet.home_team: userBet.away_team;
         const expect = userBet.selection;
         userRank = actual === expect ? { user_name: userBet.user_name, rank: 1 } : { user_name: userBet.user_name, rank: 2 };
       } else if (userBet.type === 'race_to_10' && (userBet.home_total >= 10 || userBet.away_total >= 10)) {
-        const actual = userBet.home_total > userBet.away_total? home_team: away_team;
+        const actual = userBet.home_total > userBet.away_total? userBet.home_team: userBet.away_team;
         const expect = userBet.selection;
         userRank = actual === expect ? { user_name: userBet.user_name, rank: 1 } : { user_name: userBet.user_name, rank: 2 };
       }
@@ -78,7 +78,7 @@ module.exports = (db, helper) => {
     const betCollection = [];
     for (const betType in userRankByBetType) {
       for (const game_id in userRankByBetType[betType]) {
-        if (betType === 'points_tf') {
+        if (betType === 'points_tf' || betType === 'points_th') {
           userRankByBetType[betType][game_id] = userRankByBetType[betType][game_id]
             .sort((a, b) => {
               return a.intermediate - b.intermediate;
@@ -86,7 +86,7 @@ module.exports = (db, helper) => {
             .map((user, index) => {
               return { ...user, rank: index + 1 }
             })
-        } else if (betType === 'pickem') {
+        } else if (betType === 'pickem' || betType === 'race_to_10' || betType === 'race_to_100') {
           userRankByBetType[betType][game_id] = userRankByBetType[betType][game_id]
             .sort((a, b) => {
               return a.rank - b.rank;
@@ -103,13 +103,13 @@ module.exports = (db, helper) => {
     const userRanking = {}
     for (const bet of betCollection) {
       if (userRanking[bet.user_name]) {
-        userRanking[bet.user_name] = (userRanking[bet.user_name] + bet.rank) / 2
+        userRanking[bet.user_name].push(bet.rank);
       } else {
-        userRanking[bet.user_name] = bet.rank;
+        userRanking[bet.user_name] = [bet.rank];
       }
     }
     for (const user_name of Object.keys(userRanking)) {
-      overallRanking.push({ user_name: user_name, rank: userRanking[user_name] })
+      overallRanking.push({ user_name: user_name, rank: userRanking[user_name].reduce((acc, curr) => acc+curr, 0)/userRanking[user_name].length })
     }
     overallRanking.sort((a, b) => a.rank - b.rank);
     userRankByBetType['overall_rank'] = overallRanking;

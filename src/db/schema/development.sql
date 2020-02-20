@@ -9,7 +9,8 @@ INSERT INTO games
   (game_id, date, timestamp, home_team, away_team)
 VALUES
   (26120, '2015-11-08T03:30:00+00:00', 1446953400, 'Los Angeles Clippers', 'Houston Rockets'),
-  (26429, '2015-12-20T01:00:00+00:00', 1450573200, 'Atlanta Hawks', 'Boston Celtics');
+  (26429, '2015-12-20T01:00:00+00:00', 1450573200, 'Atlanta Hawks', 'Boston Celtics'),
+  (5555, '2019-11-26T06:35:00-05:00', 1574768100, 'Cleveland Cavaliers', 'Dallas Mavericks');
 
 INSERT INTO game_scores
   ( status,
@@ -27,7 +28,8 @@ INSERT INTO game_scores
   )
 VALUES
   ('FT', 10, 20, 30, 40, 10, 20, 30, 50, 100, 110, 26120),
-  ('FT', 10, 20, 30, 50, 10, 20, 30, 40, 110, 100, 26429);
+  ('FT', 10, 20, 30, 50, 10, 20, 30, 40, 110, 100, 26429),
+  ('Q1', 9, 0, 0, 0, 10, 0, 0, 0, 9, 10, 5555);
 
 INSERT INTO parlays
 (fee, current_status, admin, name)
@@ -41,7 +43,9 @@ VALUES
 (0, 1, 'michaelxie'),
 (0, 1, 'anthonypisani'),
 (0, 1, 'jamiekaram'),
-(0, 2, 'anthonypisani');
+
+(0, 2, 'anthonypisani'),
+(0, 2, 'michaelxie');
 
 -- pickem
 -- points_tf
@@ -50,11 +54,14 @@ VALUES
 -- race_to_100
 
 INSERT INTO bets
-(type, parlay_id, game_id)
+(id, type, parlay_id, game_id)
 VALUES
-('pickem', 1, 26120),
-('points_tf', 1, 26429),
-('pickem', 2, 26120);
+(1, 'pickem', 1, 26120),
+(2, 'points_tf', 1, 26429),
+(3, 'race_to_10', 1, 5555),
+
+(4, 'pickem', 2, 26120),
+(5, 'points_th', 2, 5555);
 
 INSERT INTO user_bets
 (selection, user_id, bet_id, parlay_id)
@@ -67,4 +74,11 @@ VALUES
 (200, 2, 2, 1),
 (300, 3, 2, 1),
 
-('Los Angeles Clippers', 1, 3, 2);
+('Cleveland Cavaliers', 1, 3, 1),
+('Dallas Mavericks', 2, 3, 1),
+('Dallas Mavericks', 3, 3, 1),
+
+('Los Angeles Clippers', 1, 4, 2),
+('Los Angeles Clippers', 3, 4, 2),
+(200, 1, 5, 1),
+(300, 3, 5, 1);

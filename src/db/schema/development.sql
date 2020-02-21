@@ -32,10 +32,10 @@ VALUES
   ('Q1', 9, 0, 0, 0, 10, 0, 0, 0, 9, 10, 5555);
 
 INSERT INTO parlays
-(fee, current_status, admin, name)
+(fee, current_status, admin, name, start_time)
 VALUES
-(500, 'close', 3, 'parlay1'),
-(1000, 'open', 1, 'parlay2');
+(500, 'close', 3, 'parlay1', 1),
+(1000, 'open', 1, 'parlay2', 1);
 
 INSERT INTO participants
 (payout, parlay_id, user_name)

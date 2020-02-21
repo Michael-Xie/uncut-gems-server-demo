@@ -20,31 +20,51 @@ ws.on("connection", socket => {
 function updateState(data) {
   ws.clients.forEach(function eachClient(client) {
     if (client.readyState === WebSocket.OPEN) {
-      if (data.type === "SET_ACTIVE") {
-        const parlays = data.activeParlays
+      if (data.type === "GLOBAL_UPDATE") {
+        const result = data
         client.send(
           JSON.stringify({
-            type: "SET_ACTIVE",
-            activeParlays: parlays
+            type: "GLOBAL_UPDATE",
+            games: result.games,
+            scores: result.scores,
+            parlays: result.parlays,
+            participants: result.participants,
+            bets: result.bets,
+            user_bets: result.user_bets
           })
         )
       }
 
-      if (data.type === "SET_GAMES") {
+      if (data.type === 'SET_GAMES') {
         const games = data.games
         client.send(
           JSON.stringify({
             type: "SET_GAMES",
             games
           })
-        )
+        ) 
       }
-      if (data.type === "SET_SCORES") {
-        const scores = data.scores
+
+      if (data.type === 'SET_PARLAYS') {
+        const parlays = data.parlays
+        const bets    = data.bets
         client.send(
           JSON.stringify({
-            type: "SET_SCORES",
-            scores
+            type: "SET_PARLAYS",
+            parlays,
+            bets
+          })
+        )
+      }
+
+      if (data.type === 'SET_USER_BETS') {
+        const user_bets = data.user_bets
+        const participants = data.participants
+        client.send(
+          JSON.stringify({
+            type: "SET_USER_BETS",
+            user_bets,
+            participants
           })
         )
       }

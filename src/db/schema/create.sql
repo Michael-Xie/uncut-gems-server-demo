@@ -24,8 +24,8 @@ CREATE TABLE parlays (
   name TEXT NOT NULL,
   fee INTEGER NOT NULL,
   current_status status NOT NULL,
+  start_time INTEGER NOT NULL,
   admin INTEGER REFERENCES users(id) ON DELETE CASCADE
-
 );
 
 CREATE TABLE participants (

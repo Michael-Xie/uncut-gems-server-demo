@@ -9,17 +9,16 @@ const cors       = require("cors")
 
 const app = express();
 
+const globalRoute = require("./routes/global")
 const gameRoute   = require("./routes/games")
 const scoreRoute  = require("./routes/scores")
 const userRoute   = require("./routes/users")
 const parlayRoute = require("./routes/parlays")
-const betRoute    = require("./routes/bets")
-const particRoute = require("./routes/participants")
 const testRoute = require("./routes/test");
 const payRoute = require("./routes/pay");
 
-const getGames  = require("./models/getGames")
-const getScores = require("./models/getScores")
+const getGames   = require("./models/getGames")
+const getScores  = require("./models/getScores")
 const betsHelper = require("./models/bets")
 const moneyHelper = require("./models/money");
 
@@ -45,12 +44,17 @@ function read(file) {
 }
 
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
-  let date = ["2020-02-21"]
+  let date = ["2020-02-22"]
   getGames(date, db, true)
+  axios.get(`http://localhost:8001/api/global/1`)
+    .catch(err => console.log(err))
 
   setInterval(() => {
     getScores(date, db)
-  }, 60000)
+    getGames(date, db)
+    axios.get(`http://localhost:8001/api/global/1`)
+      .catch(err => console.log(err))
+  }, 30000)
 
   app.use(cors())
   app.use(helmet())
@@ -61,9 +65,8 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   app.use("/api", gameRoute(db, actions.updateState))
   app.use("/api", scoreRoute(db, actions.updateState))
   app.use("/api", userRoute(db))
+  app.use("/api", globalRoute(db, actions.updateState))
   app.use("/api", parlayRoute(db, actions.updateState))
-  app.use("/api/parlay", betRoute(db))
-  app.use("/api/parlay", particRoute(db))
 
   if (ENV === "development" || ENV === "test") {
     Promise.all([

@@ -24,8 +24,8 @@ CREATE TABLE parlays (
   name TEXT NOT NULL,
   fee INTEGER NOT NULL,
   current_status status NOT NULL,
+  start_time INTEGER NOT NULL,
   admin INTEGER REFERENCES users(id) ON DELETE CASCADE
-
 );
 
 CREATE TABLE participants (
@@ -53,6 +53,7 @@ CREATE TABLE game_scores (
 
 CREATE TABLE games (
   id SERIAL PRIMARY KEY NOT NULL,
+  status TEXT,
   game_id INTEGER UNIQUE NOT NULL,
   date TEXT NOT NULL,
   timestamp BIGINT NOT NULL,

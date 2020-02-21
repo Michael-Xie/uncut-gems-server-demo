@@ -16,6 +16,7 @@ const parlayRoute = require("./routes/parlays")
 const betRoute    = require("./routes/bets")
 const particRoute = require("./routes/participants")
 const testRoute = require("./routes/test");
+const payRoute = require("./routes/pay");
 
 const getGames  = require("./models/getGames")
 const getScores = require("./models/getScores")
@@ -54,6 +55,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   app.use(helmet())
   app.use(bodyparser.json())
   
+  app.use("/api/pay", payRoute(db));
   app.use("/api/test", testRoute(db, betsHelper))
   app.use("/api", gameRoute(db, actions.updateState))
   app.use("/api", scoreRoute(db, actions.updateState))

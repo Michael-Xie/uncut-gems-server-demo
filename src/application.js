@@ -20,6 +20,7 @@ const payRoute = require("./routes/pay");
 const getGames   = require("./models/getGames")
 const getScores  = require("./models/getScores")
 const betsHelper = require("./models/bets")
+const moneyHelper = require("./models/money");
 
 const axios = require("axios")
 
@@ -59,7 +60,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   app.use(helmet())
   app.use(bodyparser.json())
   
-  app.use("/api/pay", payRoute(db));
+  app.use("/api/pay", payRoute(db, moneyHelper));
   app.use("/api/test", testRoute(db, betsHelper))
   app.use("/api", gameRoute(db, actions.updateState))
   app.use("/api", scoreRoute(db, actions.updateState))

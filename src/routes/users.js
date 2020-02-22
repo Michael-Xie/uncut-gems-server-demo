@@ -11,6 +11,16 @@ const getUserWithUsername = function (db, userName) {
 }
 
 module.exports = db => {
+  router.put("/users/update/:user_name", (request, response) => {
+    db.query(
+      `
+      UPDATE users
+      SET wallet_am
+      WHERE user_name = $1::text
+      `
+    )
+  })
+
   router.get("/users", (request, response) => {
     const { user_name, password, wallet_amount, stripe_charge_id } = request.body
     db.query(

@@ -75,7 +75,8 @@ module.exports = (dates, db, update) => {
                 $1::integer, $2::text, $3::integer, $4::text, $5::text, $6::text
               )
               ON CONFLICT (game_id)
-              DO NOTHING;
+              DO UPDATE SET
+                status = Excluded.status
               `, [game_id, date, timestamp, home_team, away_team, status]
               )
                 .catch(err => console.log(err))

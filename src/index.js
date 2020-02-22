@@ -57,6 +57,16 @@ function updateState(data) {
         )
       }
 
+      if (data.type === 'UPDATE_PARLAYS') {
+        const parlays = data.parlays
+        client.send(
+          JSON.stringify({
+            type: "UPDATE_PARLAYS",
+            parlays
+          })
+        )
+      }
+
       if (data.type === 'SET_USER_BETS') {
         const user_bets = data.user_bets
         const participants = data.participants

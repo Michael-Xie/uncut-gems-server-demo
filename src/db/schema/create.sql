@@ -73,5 +73,5 @@ CREATE TABLE user_bets (
   selection VARCHAR(255) NOT NULL,
   bet_id INTEGER REFERENCES bets(id) ON DELETE CASCADE,
   parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+  user_id TEXT NOT NULL
 );

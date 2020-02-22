@@ -49,8 +49,8 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
     .catch(err => console.log(err))
 
   setInterval(() => {
+    getGames(date, db, true)
     getScores(date, db)
-    getGames(date, db)
     axios.get(`http://localhost:8001/api/global/1`)
       .catch(err => console.log(err))
   }, 30000)

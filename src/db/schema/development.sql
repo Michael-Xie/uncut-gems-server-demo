@@ -34,8 +34,8 @@ VALUES
 INSERT INTO parlays
 (fee, current_status, admin, name, start_time)
 VALUES
-(500, 'close', 3, 'parlay1', 1),
-(1000, 'open', 1, 'parlay2', 1);
+(500, 'close', 3, 'parlay1', 1446953400),
+(1000, 'open', 1, 'parlay2', 1582329600);
 
 INSERT INTO participants
 (payout, parlay_id, user_name)
@@ -45,7 +45,7 @@ VALUES
 (0, 1, 'jamiekaram'),
 
 (0, 2, 'anthonypisani'),
-(0, 2, 'michaelxie');
+(0, 2, 'jamiekaram');
 
 -- pickem
 -- points_tf
@@ -66,19 +66,19 @@ VALUES
 INSERT INTO user_bets
 (selection, user_id, bet_id, parlay_id)
 VALUES
-('Los Angeles Clippers', 1, 1, 1),
-('Houston Rockets', 2, 1, 1),
-('Los Angeles Clippers', 3, 1, 1),
+('home', 'anthonypisani', 1, 1),
+('away', 'jamiekaram', 1, 1),
+('home', 'michaexie', 1, 1),
 
-(100, 1, 2, 1),
-(200, 2, 2, 1),
-(300, 3, 2, 1),
+(100, 'anthonypisani', 2, 1),
+(200, 'jamiekaram', 2, 1),
+(300, 'michaelxie', 2, 1),
 
-('Cleveland Cavaliers', 1, 3, 1),
-('Dallas Mavericks', 2, 3, 1),
-('Dallas Mavericks', 3, 3, 1),
+('home', 'anthonypisani', 3, 1),
+('away', 'jamiekaram', 3, 1),
+('home', 'michaelxie', 3, 1),
 
-('Los Angeles Clippers', 1, 4, 2),
-('Los Angeles Clippers', 3, 4, 2),
-(200, 1, 5, 1),
-(300, 3, 5, 1);
+('home', 'anthonypisani', 4, 2),
+('away', 'jamiekaram', 4, 2),
+(200, 'anthonypisani', 5, 2),
+(300, 'jamiekaram', 5, 2);

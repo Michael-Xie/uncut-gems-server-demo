@@ -1,6 +1,23 @@
 const router = require("express").Router();
 
 module.exports = (db, update) => {
+  router.put("/parlays/set_active/:id", (request, response) => {
+    db.query(
+      `
+      UPDATE parlays
+      SET current_status = 'in-progress'
+      WHERE id = $1::integer
+      `, [request.params.id]
+    )
+      .then(res => {
+        response.send(res)
+        db.query(`SELECT * FROM parlays`)
+          .then(({rows: parlays}) => {
+            update({type: 'UPDATE_PARLAYS', parlays})
+          })
+      })
+  })
+
   router.post("/parlays", (request, response) => {
     db.query(
       `
@@ -17,7 +34,7 @@ module.exports = (db, update) => {
     db.query(
       `
       INSERT INTO user_bets (selection, parlay_id, bet_id, user_id)
-      VALUES ($1::text, $2::integer, $3::integer, $4::integer)
+      VALUES ($1::text, $2::integer, $3::integer, $4::TEXT)
       `, [request.body.selection, request.body.parlay_id, request.body.bet_id, request.body.user_id]
     )
     .then(res => {

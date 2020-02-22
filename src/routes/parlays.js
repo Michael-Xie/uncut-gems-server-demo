@@ -5,12 +5,12 @@ module.exports = (db, update) => {
     db.query(
       `
       UPDATE parlays
-      SET current_status = 'in-progress'
+      SET current_status = $2::status
       WHERE id = $1::integer
-      `, [request.params.id]
+      `, [request.params.id, request.body.current_status]
     )
       .then(res => {
-        response.send(res)
+        response.send(res.data)
         db.query(`SELECT * FROM parlays`)
           .then(({rows: parlays}) => {
             update({type: 'UPDATE_PARLAYS', parlays})

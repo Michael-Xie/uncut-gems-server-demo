@@ -50,11 +50,14 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
     .catch(err => console.log(err))
 
   setInterval(() => {
-    getGames(date, db, true)
     getScores(date, db)
     axios.get(`http://localhost:8001/api/global/1`)
       .catch(err => console.log(err))
   }, 30000)
+
+  setInterval(() => {
+    getGames(date, db, true)
+  }, 120000)
 
   app.use(cors())
   app.use(helmet())

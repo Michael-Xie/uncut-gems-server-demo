@@ -12,7 +12,7 @@ function generateResponse(response, intent) {
   }
 }
 
-module.exports = (db) => {
+module.exports = (db, helper) => {
   router.post("/card", async (request, response) => {
     console.log("pay request body", request.body);
 
@@ -33,6 +33,13 @@ module.exports = (db) => {
         error_on_requires_action: true
       });
       console.log('payment intent', intent);
+      const userId = request.body.user_id;
+      const topUpAmount = request.body.top_up;
+      if (userId && topUpAmount) {
+        helper.addToWallet(db, userId, Number(topUpAmount)*100);
+        console.log('Added to db for', userId, topUpAmount, "dollars");
+
+      }
       return generateResponse(response, intent);
     } catch (e) {
       if (e.type === 'StripeCardError') {

@@ -47,6 +47,8 @@ Switching between mock and rapidapi servers:
 - Go to getGames and getScores and set useMock to false to use rapidapi and vice versa
 
 Heroku:
+- `npm install -g heroku`
+
 - Changes can be pushed by:
 `git push heroku master`
 

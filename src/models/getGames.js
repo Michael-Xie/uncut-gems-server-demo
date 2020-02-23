@@ -8,12 +8,20 @@ module.exports = (dates, db, update) => {
   // }
   // ---------------------------------------------
   dates.map(date => {
-    axios(`https://api-basketball.p.rapidapi.com/games?date=${date}`, {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-host": "api-basketball.p.rapidapi.com",
-        "x-rapidapi-key": "d8dfc5cbfdmshbb0b69d2a790b3dp1ba90ejsn8f36ab430b8b"
-      }
+    const useMock = true; //switch for using mock server
+    let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
+  
+    if (useMock) {
+      console.log('using mock server url for getGames');
+      url = `http:/http://localhost:8003/mock_data`
+    }
+    axios(url, {
+      "method": "GET"
+      // ,
+      // "headers": {
+      //   "x-rapidapi-host": "api-basketball.p.rapidapi.com",
+      //   "x-rapidapi-key": "d8dfc5cbfdmshbb0b69d2a790b3dp1ba90ejsn8f36ab430b8b"
+      // }
     })
       .then(res => {
         // get all the games for the current date.

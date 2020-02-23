@@ -47,6 +47,7 @@ Switching between mock and rapidapi servers:
 - Go to getGames and getScores and set useMock to false to use rapidapi and vice versa
 
 Heroku:
+- https://uncut-gems-api-server.herokuapp.com/
 - `npm install -g heroku`
 
 - Changes can be pushed by:

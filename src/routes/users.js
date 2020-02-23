@@ -57,7 +57,7 @@ module.exports = db => {
 
 
   router.post("/users", (request, response) => {
-    const { user_name, password, wallet_amount, stripe_charge_id } = request.body
+    const { user_name, password, stripe_charge_id } = request.body
     getUserWithUsername(db, user_name)
     .then((result) => {
       const user = result.rows[0];
@@ -65,11 +65,11 @@ module.exports = db => {
         db.query(
           `
           INSERT INTO users (
-            user_name, password, wallet_amount, stripe_charge_id
+            user_name, password, stripe_charge_id
           ) VALUES (
-            $1::text, $2::text, $3::integer, $4::integer 
+            $1::text, $2::text, $3::integer 
           ) RETURNING *
-          `, [user_name, password, wallet_amount, stripe_charge_id]
+          `, [user_name, password, stripe_charge_id]
         ).then((res) => {
           response.json(res.rows[0]);
         })

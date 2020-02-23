@@ -42,7 +42,29 @@ function read(file) {
     );
   });
 }
+/*
+Switching between mock and rapidapi servers:
+- Go to getGames and getScores and set useMock to false to use rapidapi and vice versa
 
+Heroku:
+- https://uncut-gems-api-server.herokuapp.com/
+- `npm install -g heroku`
+
+- Changes can be pushed by:
+`git push heroku master`
+
+- Can pause the server by:
+`heroku maintenance:on`
+
+- Then turn it back on:
+`heroku maintenance:off`
+
+- To access the database: 
+`psql -h ec2-52-203-160-194.compute-1.amazonaws.com -p 5432 -U oawnanurcputti -d dcpo3e97vattid`
+password in heroku > Settings > Reveal Config Vars > DATABASE_URL : select password portion
+<username>:<password>@<host>:<port>/<database>
+  - can use to recreate and reseed db
+*/
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
   let date = ["2020-02-23"]
   getGames(date, db, true)

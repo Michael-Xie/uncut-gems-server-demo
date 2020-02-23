@@ -1,4 +1,5 @@
-const router = require("express").Router();
+const router   = require("express").Router();
+const rankings = require("./../models/getRankings")
 
 module.exports = (db, update) => {
   router.get("/global/:id", (request, response) => {
@@ -24,6 +25,8 @@ module.exports = (db, update) => {
                               db.query(`SELECT * FROM user_bets`)
                                 .then(({rows: user_bets}) => {
                                   result['user_bets'] = [...user_bets]
+                                  // call here.
+                                  result['rankings'] = rankings(db, bets, user_bets, parlays, participants, scores)
                                   response.send({...result})
                                   if (request.params.id === '1')
                                     update({
@@ -34,7 +37,8 @@ module.exports = (db, update) => {
                                       participants: result.participants,
                                       bets: result.bets,
                                       users: result.users,
-                                      user_bets: result.user_bets
+                                      user_bets: result.user_bets,
+                                      rankings: result.rankings
                                   })
                               })
                           })

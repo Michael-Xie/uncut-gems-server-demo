@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router   = require("express").Router();
 
 module.exports = (db, update) => {
   router.put("/parlays/set_active/:id", (request, response) => {
@@ -83,9 +83,9 @@ module.exports = (db, update) => {
   router.post("/parlays/participants", (request, response) => {
     db.query(
       `
-      INSERT INTO participants (payout, user_name, parlay_id)
-      VALUES ($1::integer, $2::text, $3::integer) RETURNING *
-      `, [0, request.body.user_name, request.body.parlay_id]
+      INSERT INTO participants (points, payout, user_name, parlay_id)
+      VALUES ($1::integer, $2::integer, $3::text, $4::integer) RETURNING *
+      `, [0, 0, request.body.user_name, request.body.parlay_id]
     )
     .then(res => response.send(res))
     .catch(err => console.log(err))

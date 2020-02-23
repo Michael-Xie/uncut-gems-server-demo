@@ -38,14 +38,14 @@ VALUES
 (1000, 'open', 1, 'parlay2', 1582329600);
 
 INSERT INTO participants
-(payout, parlay_id, user_name)
+(points, payout, parlay_id, user_name)
 VALUES
-(0, 1, 'michaelxie'),
-(0, 1, 'anthonypisani'),
-(0, 1, 'jamiekaram'),
+(0, 0, 1, 'michaelxie'),
+(0, 0, 1, 'anthonypisani'),
+(0, 0, 1, 'jamiekaram'),
 
-(0, 2, 'anthonypisani'),
-(0, 2, 'jamiekaram');
+(0, 0, 2, 'anthonypisani'),
+(0, 0, 2, 'jamiekaram');
 
 -- pickem
 -- points_tf

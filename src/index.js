@@ -30,7 +30,9 @@ function updateState(data) {
             parlays: result.parlays,
             participants: result.participants,
             bets: result.bets,
-            user_bets: result.user_bets
+            user_bets: result.user_bets,
+            users: result.users,
+            rankings: result.rankings
           })
         )
       }

@@ -30,6 +30,7 @@ CREATE TABLE parlays (
 
 CREATE TABLE participants (
   id SERIAL PRIMARY KEY NOT NULL,
+  points INTEGER,
   payout INTEGER NOT NULL,
   parlay_id INTEGER REFERENCES parlays(id) ON DELETE CASCADE,
   user_name TEXT REFERENCES users(user_name) ON DELETE CASCADE

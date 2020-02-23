@@ -12,11 +12,11 @@ module.exports = (dates, db) => {
     }
     axios(url, {
       "method": "GET"
-      // ,
-      // "headers": {
-      //   "x-rapidapi-host": "api-basketball.p.rapidapi.com",
-      //   "x-rapidapi-key": "d8dfc5cbfdmshbb0b69d2a790b3dp1ba90ejsn8f36ab430b8b"
-      // }
+      ,
+      "headers": {
+        "x-rapidapi-host": "api-basketball.p.rapidapi.com",
+        "x-rapidapi-key": "d8dfc5cbfdmshbb0b69d2a790b3dp1ba90ejsn8f36ab430b8b"
+      }
     })
     .then(res => {
       // if (res.data.response.length > 0)

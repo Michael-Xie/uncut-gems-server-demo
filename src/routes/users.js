@@ -15,10 +15,12 @@ module.exports = db => {
     db.query(
       `
       UPDATE users
-      SET wallet_am
-      WHERE user_name = $1::text
-      `
+      SET wallet_amount = wallet_amount + $1::integer
+      WHERE user_name = $2::text
+      `, [request.body.wallet_amount, request.params.user_name]
     )
+      .then(res => response.send(res))
+
   })
 
   router.get("/users", (request, response) => {

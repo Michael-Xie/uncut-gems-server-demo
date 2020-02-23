@@ -44,7 +44,7 @@ function read(file) {
 }
 
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
-  let date = ["2020-02-22"]
+  let date = ["2020-02-23"]
   getGames(date, db, true)
   axios.get(`http://localhost:8001/api/global/1`)
     .catch(err => console.log(err))

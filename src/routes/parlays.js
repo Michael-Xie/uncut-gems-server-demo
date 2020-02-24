@@ -1,6 +1,21 @@
 const router   = require("express").Router();
 
 module.exports = (db, update) => {
+  router.delete("/parlays/delete/:id", (request, response) => {
+    db.query(
+      `
+      DELETE FROM parlays
+      WHERE id = $1::integer
+      `, [request.params.id]
+    )
+    .then(res => {
+      db.query(`SELECT * FROM parlays`)
+        .then(({rows: parlays}) => {
+          update({type: 'UPDATE_PARLAYS', parlays})
+        })
+    })
+  })
+
   router.put("/parlays/set_active/:id", (request, response) => {
     db.query(
       `

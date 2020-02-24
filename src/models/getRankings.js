@@ -1,10 +1,7 @@
 const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
   const results = {}
 
-  parlays.map(parlay => {
-    if (parlay.current_status === 'in-progress')
-      results[parlay.id] = {}
-  })
+  parlays.map(parlay => results[parlay.id] = {})
   
   const parlays_in_progress = Object.keys(results)
 
@@ -169,39 +166,43 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
       }
     })
     results[parlay_id_key] = obj
+    // get parlay and check status.
+    const thisParlay = parlays.filter(parlay => parlay.id === parlay_id_key)[0].current_status
     // check if we can close the parlay.
-    const id = bets.map(bet => {
-      if (bet.parlay_id === parlay_id_key)
-        return bet.game_id 
-    })
-    const ss = scores.filter(score => {
-      if (id.includes(score.game_id)) return score
-    })
-    const sl = ss.filter(score => score.status === 'FT' || score.status === 'AOT')
-                 .map(score => score.status)
-    if (ss.length === sl.length) {
-      // update parlay status
-      db.query(
-        `
-        UPDATE parlays
-        SET current_status = 'close'
-        WHERE id = $1::integer
-        `, [parlay_id_key]
-      )
-      // update user wallets with winnings
-      user_keys.map(name => {
-        let value;
-        if (!money[name]) value = 0
-        else              value = money[name]
-
+    if (thisParlay !== 'close') {
+      const id = bets.map(bet => {
+        if (bet.parlay_id === parlay_id_key)
+          return bet.game_id 
+      })
+      const ss = scores.filter(score => {
+        if (id.includes(score.game_id)) return score
+      })
+      const sl = ss.filter(score => score.status === 'FT' || score.status === 'AOT')
+                   .map(score => score.status)
+      if (ss.length === sl.length) {
+        // update parlay status
         db.query(
           `
-          UPDATE users
-          SET wallet_amount = wallet_amount + $1::integer
-          WHERE user_name = $2::text
-          `, [value, name]
+          UPDATE parlays
+          SET current_status = 'close'
+          WHERE id = $1::integer
+          `, [parlay_id_key]
         )
-      })
+        // update user wallets with winnings
+        user_keys.map(name => {
+          let value;
+          if (!money[name]) value = 0
+          else              value = money[name]
+
+          db.query(
+            `
+            UPDATE users
+            SET wallet_amount = wallet_amount + $1::integer
+            WHERE user_name = $2::text
+            `, [value, name]
+          )
+        })
+      }
     }
   })
   // return -> rankings => {parlay_id: {user1: __, user2: __, user3: __}

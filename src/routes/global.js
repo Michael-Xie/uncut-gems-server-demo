@@ -25,7 +25,6 @@ module.exports = (db, update) => {
                               db.query(`SELECT * FROM user_bets`)
                                 .then(({rows: user_bets}) => {
                                   result['user_bets'] = [...user_bets]
-                                  // call here.
                                   result['rankings'] = rankings(db, bets, user_bets, parlays, participants, scores)
                                   response.send({...result})
                                   if (request.params.id === '1')

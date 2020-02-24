@@ -1,11 +1,9 @@
 const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
   const results = {}
-  let fee = 0
 
   parlays.map(parlay => {
     if (parlay.current_status === 'in-progress')
       results[parlay.id] = {}
-      fee = parlay.fee
   })
   
   const parlays_in_progress = Object.keys(results)
@@ -134,11 +132,13 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
     const money = {}
     user_keys.forEach(name => {
       const value = winnings(user_keys.length)
+      const fee   = parlays.filter(parlay => parlay.id === parlay_id_key)
+                           .map(parlay => parlay.fee)[0]
       for (let index in value) {
         if (obj[parseInt(index) + 1].length > 1) {
           for (let i = 0; i < obj[parseInt(index) + 1].length; i++) {
             if (Object.keys(obj[parseInt(index) + 1][i]).includes(name)) {
-              obj[parseInt(index) + 1][i][name][1] = (value / 100) * fee * user_keys.length
+              obj[parseInt(index) + 1][i][name][1] = (50 / 100) * fee * user_keys.length
               const values = [...obj[parseInt(index) + 1][i][name]]
               money[name] = values[1]
               db.query(
@@ -170,7 +170,10 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
     })
     results[parlay_id_key] = obj
     // check if we can close the parlay.
-    const id = bets.map(bet => bet.game_id)
+    const id = bets.map(bet => {
+      if (bet.parlay_id === parlay_id_key)
+        return bet.game_id 
+    })
     const ss = scores.filter(score => {
       if (id.includes(score.game_id)) return score
     })
@@ -200,7 +203,6 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
         )
       })
     }
-    
   })
   // return -> rankings => {parlay_id: {user1: __, user2: __, user3: __}
   return results

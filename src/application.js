@@ -68,12 +68,12 @@ password in heroku > Settings > Reveal Config Vars > DATABASE_URL : select passw
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
   let date = ["2020-02-23", "2020-02-24", "2020-02-25"]
   getGames(date, db, true)
-  axios.get(`http://localhost:8001/api/global/1`)
+  axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
     .catch(err => console.log(err))
 
   setInterval(() => {
     getScores(date, db)
-    axios.get(`http://localhost:8001/api/global/1`)
+    axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
       .catch(err => console.log(err))
   }, 30000)
 

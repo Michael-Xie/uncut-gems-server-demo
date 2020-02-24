@@ -15,6 +15,7 @@ module.exports = (dates, db, update) => {
       console.log('using mock server url for getGames');
       url = `http://localhost:8003/mock_data`
     }
+
     axios(url, {
       "method": "GET"
       ,

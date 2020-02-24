@@ -67,8 +67,8 @@ password in heroku > Settings > Reveal Config Vars > DATABASE_URL : select passw
   - can use to recreate and reseed db
 */
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
-  let today = moment();
-  let tomorrow = moment().add(1, 'days');
+  let today = moment().toISOString(true).split('T')[0];
+  let tomorrow = moment().add(1, 'days').toISOString(true).split('T')[0];
 
   let date = [today, tomorrow]
   getGames(date, db, true)

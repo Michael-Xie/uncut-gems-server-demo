@@ -8,6 +8,8 @@ module.exports = (dates, db, update) => {
   // }
   // ---------------------------------------------
   dates.map(date => {
+    console.log('current date in getscores', date);
+
     const useMock = false; //switch for using mock server
     let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
 

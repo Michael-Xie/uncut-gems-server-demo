@@ -61,7 +61,12 @@ Heroku:
 `heroku maintenance:off`
 
 - To access the database: 
-`psql -h ec2-52-203-160-194.compute-1.amazonaws.com -p 5432 -U oawnanurcputti -d dcpo3e97vattid`
+`
+postgres://qcxscfubhxnste:b8cef78bbce06d7d8ec7291f797aa7117b702a75666c466f8ad6a7bc2b176e1c@ec2-3-234-169-147.compute-1.amazonaws.com:5432/d814rin7atpl5i
+psql -h ec2-3-234-169-147.compute-1.amazonaws.com -p 5432 -U qcxscfubhxnste -d d814rin7atpl5i`
+
+
+psql -h ec2-52-203-160-194.compute-1.amazonaws.com -p 5432 -U oawnanurcputti -d dcpo3e97vattid`
 password in heroku > Settings > Reveal Config Vars > DATABASE_URL : select password portion
 <username>:<password>@<host>:<port>/<database>
   - can use to recreate and reseed db
@@ -97,7 +102,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   app.use("/api", globalRoute(db, actions.updateState))
   app.use("/api", parlayRoute(db, actions.updateState))
 
-  if (ENV === "development" || ENV === "test") {
+  if (ENV === "production" || ENV === "development" || ENV === "test") {
     Promise.all([
       read(path.resolve(__dirname, `db/schema/create.sql`)),
       read(path.resolve(__dirname, `db/schema/${ENV}.sql`))

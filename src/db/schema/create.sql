@@ -11,7 +11,6 @@ DROP TYPE IF EXISTS status CASCADE;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   user_name VARCHAR(255) UNIQUE NOT NULL,
-  user_photo TEXT DEFAULT 'https://i.imgur.com/pYla8hh.png',
   wallet_amount INTEGER DEFAULT 20000,
   password VARCHAR(255) NOT NULL,
   stripe_charge_id TEXT

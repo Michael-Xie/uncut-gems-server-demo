@@ -20,6 +20,7 @@
     "express": "^4.16.4",
     "express-timeout-handler": "^2.2.0",
     "helmet": "^3.21.2",
+    "moment": "^2.24.0",
     "pg": "^7.8.1",
     "socket.io": "^2.2.0",
     "stripe": "^8.19.0",

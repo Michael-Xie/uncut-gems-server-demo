@@ -8,6 +8,8 @@ module.exports = (dates, db, update) => {
   // }
   // ---------------------------------------------
   dates.map(date => {
+    console.log('current date in getscores', date);
+
     const useMock = false; //switch for using mock server
     let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
 
@@ -98,7 +100,7 @@ module.exports = (dates, db, update) => {
       .then(() => {
         if (update) {
           setTimeout(() => {
-            axios.get("http://localhost:8001/api/games/1")
+            axios.get("/api/games/1", {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
           }, 1000)
         }
       })

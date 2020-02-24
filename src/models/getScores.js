@@ -3,7 +3,11 @@ const axios = require("axios")
 module.exports = (dates, db) => {
 
   dates.map(date => {
-    const useMock = false; //switch for using mock server
+
+    console.log('current date in getscores', date);
+
+    const useMock = true; //switch for using mock server
+
     let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
   
     /*
@@ -76,7 +80,7 @@ module.exports = (dates, db) => {
     // upon the completion of the update, call the games route to trigger the
     // a websocket call.
     .then(res => {
-      axios.get("http://localhost:8001/api/scores")
+      axios.get("/api/scores", {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
     })
     .catch(err => console.log(err))
   })

@@ -3,7 +3,7 @@ const axios = require("axios")
 module.exports = (dates, db) => {
 
   dates.map(date => {
-    const useMock = true; //switch for using mock server
+    const useMock = false; //switch for using mock server
     let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
   
     if (useMock) {

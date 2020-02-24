@@ -3,9 +3,11 @@ const axios = require("axios")
 module.exports = (dates, db) => {
 
   dates.map(date => {
+
     console.log('current date in getscores', date);
 
     const useMock = true; //switch for using mock server
+
     let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
   
     /*

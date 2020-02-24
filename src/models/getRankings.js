@@ -1,10 +1,7 @@
 const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
   const results = {}
 
-  parlays.map(parlay => {
-    if (parlay.current_status === 'in-progress')
-      results[parlay.id] = {}
-  })
+  parlays.map(parlay => results[parlay.id] = {})
   
   const parlays_in_progress = Object.keys(results)
 

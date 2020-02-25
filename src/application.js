@@ -72,6 +72,12 @@ password in heroku > Settings > Reveal Config Vars > DATABASE_URL : select passw
   - can use to recreate and reseed db
 */
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
+ 
+
+  app.use(cors())
+  app.use(helmet())
+  app.use(bodyparser.json())
+
   let today = moment().toISOString(true).split('T')[0];
   let tomorrow = moment().add(1, 'days').toISOString(true).split('T')[0];
 
@@ -89,10 +95,6 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   setInterval(() => {
     getGames(date, db, true)
   }, 120000)
-
-  app.use(cors())
-  app.use(helmet())
-  app.use(bodyparser.json())
   
   app.use("/api/pay", payRoute(db, moneyHelper));
   app.use("/api/test", testRoute(db, betsHelper))
@@ -108,7 +110,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
       read(path.resolve(__dirname, `db/schema/${ENV}.sql`))
     ])
       .then(([create, seed]) => {
-        app.get('https://uncut-gems-api-server.herokuapp.com/api/debug/reset', (request, response) => {
+        app.get('/api/debug/reset', (request, response) => {
           db.query(create)
             .then(() => db.query(seed))
             .then(() => {

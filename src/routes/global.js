@@ -1,8 +1,9 @@
 const router   = require("express").Router();
 const rankings = require("./../models/getRankings")
+const cors = require('cors');
 
 module.exports = (db, update) => {
-  router.get("/global/:id", (request, response) => {
+  router.get("/global/:id", cors(), (request, response) => {
     const result = {}
     db.query(`SELECT * FROM games`)
       .then(({rows: games}) => {

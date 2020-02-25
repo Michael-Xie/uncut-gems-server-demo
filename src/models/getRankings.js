@@ -82,10 +82,10 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
       const prevScore = scoring[order[prevKey]]
       const currScore = scoring[order[currKey]]
       if (curr > 0 && prevScore === currScore) {
-        obj[prev].push({ order[prev]: results[parlay_id_key][order][key]})
+        obj[prev].push({ order[prev]: results[parlay_id_key][order][prev]})
         curr++
       } else {
-        obj[curr] = [ { [order[curr]]: results[parlay_id_key][order[key]] } ]
+        obj[curr] = [ { [order[curr]]: results[parlay_id_key][order[curr]] } ]
         prev++
         curr++
       }

@@ -92,7 +92,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
     getScores(date, db)
     axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
       .catch(err => console.log(err))
-  }, 120000)
+  }, 60000)
 
   setInterval(() => {
     getGames(date, db, true)

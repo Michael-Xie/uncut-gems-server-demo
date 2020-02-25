@@ -74,14 +74,21 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
     }
     const order = Object.keys(scoring).sort((a, b) => scoring[b] - scoring[a])
     const obj = {}
+    // orderKeys --> 0, 1, 2
+    // orderVales --> anthony, jamie
+    let prev = -1
+    let curr = 0
     for (let key in order) {
-      console.log(order)
-      console.log(obj)
-      const currKey   = parseInt(key) + 1
-      const prevKey   = currKey - 1
-      const prevScore = scoring[order[prevKey - 1]]
-      const currScore = scoring[order[currKey - 1]]
-      obj[currKey] = [ { [order[key]]: results[parlay_id_key][order[key]] } ]
+      const prevScore = scoring[order[prevKey]]
+      const currScore = scoring[order[currKey]]
+      if (curr > 0 && prevScore === currScore) {
+        obj[prev].push({ order[prev]: results[parlay_id_key][order][key]})
+        curr++
+      } else {
+        obj[curr] = [ { [order[curr]]: results[parlay_id_key][order[key]] } ]
+        prev++
+        curr++
+      }
     }
     const winnings = (participants) => {
       const split = (key) => {

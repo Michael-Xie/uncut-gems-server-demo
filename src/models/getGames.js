@@ -11,11 +11,11 @@ module.exports = (dates, db, update) => {
     console.log('current date in getscores', date);
 
     const useMock = true; //switch for using mock server
-    let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
+    let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`;
 
     if (useMock) {
       console.log('using mock server url for getGames');
-      url = `http://localhost:8003/mock_data`
+      url = `https://mock-rapidsports-api.herokuapp.com/mock_data`
     }
 
     axios(url, {

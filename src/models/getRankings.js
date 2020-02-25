@@ -96,7 +96,7 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
       else
         obj[currKey] = [ { [order[key]]: results[parlay_id_key][order[key]] } ]
     }
-
+    
     const winnings = (participants) => {
       const split = (key) => {
         if (obj[key])

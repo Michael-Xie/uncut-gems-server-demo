@@ -68,7 +68,6 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
       }
     })
     // rank order the users.
-    /*
     const scoring = {}
     for (let key of user_keys) {
       scoring[key] = results[parlay_id_key][key][0]
@@ -77,6 +76,7 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
     const obj = {}
     // orderKeys --> 0, 1, 2
     // orderVales --> anthony, jamie
+    /*
     let prev = -1
     let curr = 0
     for (let key in order) {

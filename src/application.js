@@ -43,6 +43,7 @@ function read(file) {
     );
   });
 }
+
 /*
 Switching between mock and rapidapi servers:
 - Go to getGames and getScores and set useMock to false to use rapidapi and vice versa
@@ -66,6 +67,7 @@ password in heroku > Settings > Reveal Config Vars > DATABASE_URL : select passw
 <username>:<password>@<host>:<port>/<database>
   - can use to recreate and reseed db
 */
+
 module.exports = function application(ENV, actions = { updateState: () => {}}) {
   let today = moment().toISOString(true).split('T')[0];
   let tomorrow = moment().add(1, 'days').toISOString(true).split('T')[0];
@@ -103,7 +105,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
       read(path.resolve(__dirname, `db/schema/${ENV}.sql`))
     ])
       .then(([create, seed]) => {
-        app.get('https://uncut-gems-api-server.herokuapp.com/api/debug/reset", (request, response) => {
+        app.get('/api/debug/reset', (request, response) => {
           db.query(create)
             .then(() => db.query(seed))
             .then(() => {

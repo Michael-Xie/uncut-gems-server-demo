@@ -23,7 +23,7 @@ module.exports = (dates, db, update) => {
       ,
       "headers": {
         "x-rapidapi-host": "api-basketball.p.rapidapi.com",
-        "x-rapidapi-key": "d8dfc5cbfdmshbb0b69d2a790b3dp1ba90ejsn8f36ab430b8b"
+        "x-rapidapi-key": "7063bd6e04mshccfe64d5f4d0bd9p160e5cjsnbdc90059b658"
       }
     })
       .then(res => {

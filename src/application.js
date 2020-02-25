@@ -96,7 +96,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   
   setInterval(() => {
     getGames(date, db, true)
-  }, 60000)
+  }, 45000)
   
   app.use("/api/pay", payRoute(db, moneyHelper));
   app.use("/api/test", testRoute(db, betsHelper))

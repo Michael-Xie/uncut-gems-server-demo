@@ -10,12 +10,11 @@ module.exports = (dates, db) => {
 
     let url = `https://api-basketball.p.rapidapi.com/games?date=${date}`
   
-    /*
     if (useMock) {
       console.log('using mock server url for getScores');
       url = `http://localhost:8003/mock_data`
     }
-    */
+    
     axios(url, {
       "method": "GET"
       ,

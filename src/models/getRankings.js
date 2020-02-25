@@ -75,6 +75,8 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
     const order = Object.keys(scoring).sort((a, b) => scoring[b] - scoring[a])
     const obj = {}
     for (let key in order) {
+      console.log(order)
+      console.log(obj)
       const currKey   = parseInt(key) + 1
       const prevKey   = currKey - 1
       const prevScore = scoring[order[prevKey - 1]]

@@ -49,7 +49,7 @@ Switching between mock and rapidapi servers:
 - Go to getGames and getScores and set useMock to false to use rapidapi and vice versa
 
 Heroku:
-- https://uncut-gems-api-server.herokuapp.com/
+- https://uncut-gems-server-demo.herokuapp.com/
 - `npm install -g heroku`
 
 - Changes can be pushed by:
@@ -85,12 +85,12 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
 
   let date = [today, tomorrow]
   getGames(date, db, true)
-  axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
+  axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-server-demo.herokuapp.com'})
     .catch(err => console.log(err))
 
   setInterval(() => {
     getScores(date, db)
-    axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
+    axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-server-demo.herokuapp.com'})
       .catch(err => console.log(err))
   }, 30000)
   

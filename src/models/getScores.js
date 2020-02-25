@@ -79,7 +79,7 @@ module.exports = (dates, db) => {
     // upon the completion of the update, call the games route to trigger the
     // a websocket call.
     .then(res => {
-      axios.get("/api/scores", {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
+      axios.get("/api/scores", {baseURL: 'https://uncut-gems-server-demo.herokuapp.com'})
     })
     .catch(err => console.log(err))
   })

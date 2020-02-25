@@ -100,7 +100,7 @@ module.exports = (dates, db, update) => {
       .then(() => {
         if (update) {
           setTimeout(() => {
-            axios.get("/api/games/1", {baseURL: 'https://uncut-gems-api-server.herokuapp.com'})
+            axios.get("/api/games/1", {baseURL: 'https://uncut-gems-server-demo.herokuapp.com'})
           }, 1000)
         }
       })

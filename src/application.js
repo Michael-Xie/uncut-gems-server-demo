@@ -108,7 +108,7 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
       read(path.resolve(__dirname, `db/schema/${ENV}.sql`))
     ])
       .then(([create, seed]) => {
-        app.get('https://uncut-gems-api-server.herokuapp.com/api/debug/reset", (request, response) => {
+        app.get('https://uncut-gems-api-server.herokuapp.com/api/debug/reset', (request, response) => {
           db.query(create)
             .then(() => db.query(seed))
             .then(() => {

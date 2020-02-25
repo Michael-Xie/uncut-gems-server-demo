@@ -76,6 +76,7 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
     const obj = {}
     // orderKeys --> 0, 1, 2
     // orderVales --> anthony, jamie
+    /*
     let prev = -1
     let curr = 0
     for (let key in order) {
@@ -90,6 +91,16 @@ const getRankings = (db, bets, user_bets, parlays, participants, scores) => {
         curr++
       }
     }
+    */
+    const obj = {}
+    for (let key in order) {
+      const currKey   = parseInt(key) + 1
+      const prevKey   = currKey - 1
+      const prevScore = scoring[order[prevKey - 1]]
+      const currScore = scoring[order[currKey - 1]]
+      obj[currKey] = [ { [order[key]]: results[parlay_id_key][order[key]] } ]
+    }
+
     const winnings = (participants) => {
       const split = (key) => {
         if (obj[key])

@@ -92,11 +92,11 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
     getScores(date, db)
     axios.get(`/api/global/1`, {baseURL: 'https://uncut-gems-server-demo.herokuapp.com'})
       .catch(err => console.log(err))
-  }, 30000);
+  }, 15000);
   
   setInterval(() => {
     getGames(date, db, true)
-  }, 45000);
+  }, 30000);
   
   app.use("/api/pay", payRoute(db, moneyHelper));
   app.use("/api/test", testRoute(db, betsHelper))

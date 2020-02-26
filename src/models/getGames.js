@@ -83,7 +83,7 @@ module.exports = (dates, db, update) => {
               INSERT INTO games (
                 game_id, date, timestamp, home_team, away_team, status
               ) VALUES (
-                $1::integer, $2::text, $3::integer, $4::text, $5::text, $6::text
+                $1::integer, $2::text, $3::bigint, $4::text, $5::text, $6::text
               )
               ON CONFLICT (game_id)
               DO UPDATE SET

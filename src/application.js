@@ -80,6 +80,9 @@ module.exports = function application(ENV, actions = { updateState: () => {}}) {
   app.use(helmet())
   app.use(bodyparser.json())
 
+  // app.use((req, res, next) => {
+  //   res.header('Access-Control-Allow-Origin')
+  // })
   let today = moment().toISOString(true).split('T')[0];
   let tomorrow = moment().add(1, 'days').toISOString(true).split('T')[0];
 

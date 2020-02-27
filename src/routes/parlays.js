@@ -37,10 +37,10 @@ module.exports = (db, update) => {
     db.query(
       `
       INSERT INTO parlays (name, fee, current_status, admin, start_time) 
-      VALUES ($1::text, $2::integer, $3::status, $4::integer, $5::integer) RETURNING *
+      VALUES ($1::text, $2::integer, $3::status, $4::integer, $5::bigint) RETURNING *
       `, [request.body.name, request.body.fee, 
           request.body.status, request.body.admin,
-          request.body.start_time]
+          parseInt(request.body.start_time)]
     )
     .then(({rows: parlay}) => response.send(parlay))
   })

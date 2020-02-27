@@ -63,6 +63,10 @@ Heroku:
 
 - To access the database: 
 `
+
+postgres://siepqxkelzqgig:3f0559caa4d1ea80bfbe55868f938f6de8e884c2fbac9323c1421d3c62208ddf@ec2-34-192-30-15.compute-1.amazonaws.com:5432/dc7v3nldbjjgps
+psql -h ec2-34-192-30-15.compute-1.amazonaws.com -p 5432 -U siepqxkelzqgig -d dc7v3nldbjjgps`
+
 postgres://qcxscfubhxnste:b8cef78bbce06d7d8ec7291f797aa7117b702a75666c466f8ad6a7bc2b176e1c@ec2-3-234-169-147.compute-1.amazonaws.com:5432/d814rin7atpl5i
 psql -h ec2-3-234-169-147.compute-1.amazonaws.com -p 5432 -U qcxscfubhxnste -d d814rin7atpl5i`
 
